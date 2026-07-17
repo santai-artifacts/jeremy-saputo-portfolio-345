@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Writing Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=EB+Garamond:ital@0;1&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=EB+Garamond:ital@0;1&family=Caveat:wght@400;700&family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,567 +19,747 @@
             --type-section: 48px;
             --type-display: 140px;
 
-            --space-tight: 8px;
-            --space-loose: 80px;
-
-            --bg-warm: #F5F5F2;
-            --bg-cool: #FFFFFF;
-            --bg-cream: #FBF8F3;
-            --text-primary: #000000;
-            --text-soft: #666666;
-            --accent: #E91E63;
-
             --font-display: 'EB Garamond', serif;
             --font-mono: 'Courier Prime', monospace;
             --font-hand: 'Caveat', cursive;
+            --font-glitch: 'Inconsolata', monospace;
         }
 
         body {
-            background-color: var(--bg-cool);
-            color: var(--text-primary);
+            background: #F5F5F0;
+            color: #000;
             font-family: var(--font-display);
-            line-height: 1.4;
+            line-height: 1.2;
             overflow-x: hidden;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,.02) 2px, rgba(0,0,0,.02) 4px),
+                repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0,0,0,.01) 2px, rgba(0,0,0,.01) 4px);
         }
 
-        /* Cold open - brutal spacing */
+        /* Noise overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                url('data:image/svg+xml?utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" seed="2"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Hero - violent, tilted */
         .hero {
-            height: 60vh;
+            height: 65vh;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding-left: 60px;
-            padding-bottom: 40px;
-            background: linear-gradient(135deg, var(--bg-cool) 0%, var(--bg-cream) 100%);
+            padding: 40px 40px;
+            background: linear-gradient(125deg, #F5F5F0 0%, #E8E8E0 50%, #F5F5F0 100%);
             position: relative;
+            overflow: hidden;
+            transform: rotate(-0.5deg);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: -20%;
+            width: 200%;
+            height: 120%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 2px,
+                rgba(0,0,0,0.02) 2px,
+                rgba(0,0,0,0.02) 4px
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0,
+                transparent 1px,
+                rgba(0,0,0,0.01) 1px,
+                rgba(0,0,0,0.01) 2px
+            );
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
         }
 
         .meta-label {
             font-family: var(--font-mono);
-            font-size: var(--type-meta);
-            color: var(--text-soft);
+            font-size: 10px;
+            color: #666;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 100px;
+            letter-spacing: 3px;
+            margin-bottom: 120px;
             display: block;
+            transform: rotate(-2deg) skew(-1deg);
+            opacity: 0.7;
         }
 
         .hero-text {
-            font-size: var(--type-display);
+            font-size: 180px;
             font-weight: 400;
-            line-height: 0.95;
-            letter-spacing: -3px;
-            max-width: 100%;
-            overflow: hidden;
+            line-height: 0.9;
+            letter-spacing: -4px;
+            max-width: 120%;
+            overflow: visible;
+            position: relative;
         }
 
         .hero-text span {
             display: block;
-            margin-bottom: -12px;
+            margin-bottom: -20px;
+            text-shadow:
+                2px 2px 0 rgba(233, 30, 99, 0.1),
+                -1px -1px 0 rgba(0,0,0,0.05);
+            transform: rotate(-1deg) skew(-0.5deg);
+            filter: contrast(1.1);
         }
 
-        /* Torn paper effect on hero */
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 20px;
-            background: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
-            opacity: 0.5;
+        .hero-text span:first-child {
+            transform: rotate(-1.5deg) skew(-1deg) translateX(-10px);
         }
 
-        /* Navigation */
+        .hero-text span:last-child {
+            transform: rotate(0.8deg) skew(0.5deg) translateX(20px);
+        }
+
+        /* Navigation - chaotic */
         nav {
             position: fixed;
-            top: 24px;
-            left: 60px;
+            top: 20px;
+            left: 30px;
             font-family: var(--font-mono);
-            font-size: var(--type-label);
+            font-size: 14px;
             z-index: 1000;
             display: flex;
-            gap: 40px;
+            flex-direction: column;
+            gap: 2px;
         }
 
         nav a {
             text-decoration: none;
-            color: var(--text-primary);
-            border-bottom: 1px solid transparent;
-            transition: all 0.2s;
-            writing-mode: horizontal-tb;
+            color: #000;
+            transform: rotate(-1deg);
+            border: 1px solid rgba(0,0,0,0.2);
+            padding: 4px 8px;
+            background: rgba(255,255,255,0.5);
+            display: inline-block;
+            width: fit-content;
+            transition: all 0.1s;
+            filter: contrast(1.2);
+        }
+
+        nav a:nth-child(1) {
+            transform: rotate(2deg) skew(1deg);
+        }
+
+        nav a:nth-child(2) {
+            transform: rotate(-1.5deg) skew(-0.5deg);
+            margin-left: 10px;
         }
 
         nav a:hover {
-            border-bottom: 1px solid var(--text-primary);
+            background: #E91E63;
+            color: white;
+            transform: rotate(0deg) scale(1.1);
         }
 
-        /* Book spread layout */
+        /* Brutal spreads */
         .spread {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            margin: 160px auto;
-            max-width: 1400px;
-            padding: 0 60px;
+            gap: 0;
+            margin: 80px 0;
             position: relative;
+            background: white;
+            border: 3px solid #000;
+            transform: rotate(-0.3deg);
         }
 
         .spread::before {
             content: '';
             position: absolute;
             left: 50%;
-            top: -40px;
-            bottom: -40px;
-            width: 1px;
-            background: #E0E0E0;
-            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: repeating-linear-gradient(
+                0deg,
+                #000 0,
+                #000 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            z-index: 10;
         }
 
-        /* Left page */
+        .page {
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
         .page-left {
-            padding: 60px;
-            background: var(--bg-cream);
-            position: relative;
-            box-shadow: inset -4px 0 8px rgba(0,0,0,0.02);
+            background: linear-gradient(135deg, #FBF8F3 0%, #F5F5F0 100%);
+            border-right: 4px dotted #000;
         }
 
-        /* Right page */
         .page-right {
-            padding: 60px;
-            background: var(--bg-cool);
-            position: relative;
+            background: #FFFFFF;
         }
 
         .page-image {
             width: 100%;
-            height: 350px;
+            height: 320px;
             object-fit: cover;
-            margin-bottom: 30px;
-            background: #E0E0E0;
-            position: relative;
-        }
-
-        .page-image.skewed {
-            transform: rotate(-1.5deg);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-
-        .page-image.tape {
-            box-shadow:
-                0 0 0 2px white,
-                0 4px 0 -2px rgba(0,0,0,0.1),
-                -20px -40px 0 -15px rgba(0,0,0,0.05);
-        }
-
-        .tape-mark {
-            position: absolute;
-            background: rgba(255,200,100,0.3);
-            font-family: var(--font-hand);
-            font-size: 12px;
-            transform: rotate(-3deg);
-        }
-
-        .tape-mark.top-left {
-            width: 60px;
-            height: 8px;
-            top: -4px;
-            left: 40px;
-            background: linear-gradient(90deg, rgba(255,200,100,0.4) 0%, rgba(255,200,100,0.1) 100%);
-        }
-
-        .tape-mark.top-right {
-            width: 60px;
-            height: 8px;
-            top: -4px;
-            right: 40px;
-            background: linear-gradient(90deg, rgba(255,200,100,0.1) 0%, rgba(255,200,100,0.4) 100%);
-            transform: rotate(3deg);
-        }
-
-        /* Scribbled annotation */
-        .annotation {
-            font-family: var(--font-hand);
-            font-size: 28px;
-            color: var(--accent);
-            opacity: 0.6;
-            margin: 30px 0;
+            margin-bottom: 20px;
+            filter: contrast(1.2) saturate(0.7);
             transform: rotate(-2deg);
-            font-weight: 700;
+            border: 2px solid #000;
+            box-shadow:
+                -4px 4px 0 rgba(0,0,0,0.1),
+                8px -8px 0 rgba(233, 30, 99, 0.15);
+        }
+
+        .page-image:nth-child(2) {
+            transform: rotate(1.5deg) skew(-0.5deg);
+        }
+
+        .scribble {
+            font-family: var(--font-hand);
+            font-size: 48px;
+            color: #E91E63;
+            opacity: 0.5;
+            transform: rotate(-3deg) skew(-2deg);
+            margin: 20px 0;
+            line-height: 0.9;
+            filter: blur(0.5px);
         }
 
         .page-title {
             font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            line-height: 1.2;
+            font-weight: 700;
+            margin: 16px 0;
+            line-height: 1;
+            transform: rotate(-0.5deg) skew(-0.5deg);
+            letter-spacing: -1px;
         }
 
         .page-subtitle {
             font-family: var(--font-display);
+            font-size: 16px;
+            color: #666;
+            margin: 12px 0;
+            line-height: 1.3;
             font-style: italic;
-            font-size: var(--type-body);
-            color: var(--text-soft);
-            margin-bottom: 20px;
+            transform: rotate(0.5deg);
+        }
+
+        .page-body {
+            font-size: 14px;
             line-height: 1.6;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .page-body p {
+            margin-bottom: 12px;
+            transform: rotate(-0.2deg);
+        }
+
+        .page-body p:nth-child(odd) {
+            opacity: 0.95;
         }
 
         .page-meta {
             font-family: var(--font-mono);
-            font-size: var(--type-meta);
-            color: var(--text-soft);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 20px;
-        }
-
-        .page-meta span {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        /* Footnote style */
-        .footnote {
-            border-top: 1px solid #E0E0E0;
-            margin-top: 30px;
-            padding-top: 16px;
-            font-family: var(--font-mono);
             font-size: 11px;
-            color: var(--text-soft);
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 16px;
+            transform: rotate(-1deg);
+            background: rgba(233, 30, 99, 0.1);
+            padding: 8px;
+            display: inline-block;
         }
 
-        /* Overlapping folded paper effect */
-        .article-fold {
-            margin: 200px auto;
+        /* Glitch effect on text */
+        .glitch {
+            font-family: var(--font-glitch);
+            font-size: 13px;
+            color: #E91E63;
+            transform: rotate(-2deg) skew(-1deg);
+            line-height: 1.4;
+            opacity: 0.8;
+            filter: brightness(0.9);
+            letter-spacing: 1px;
+        }
+
+        /* Torn/photocopied section */
+        .article-raw {
+            margin: 120px auto;
             max-width: 1000px;
-            padding: 0 60px;
+            padding: 60px;
+            background: white;
+            border: 6px solid #000;
             position: relative;
+            transform: rotate(-1deg);
+            box-shadow:
+                -8px 8px 0 rgba(0,0,0,0.2),
+                inset 0 0 20px rgba(0,0,0,0.05);
         }
 
-        .fold-image {
+        .article-raw::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(
+                90deg,
+                #000 0,
+                #000 3px,
+                white 3px,
+                white 6px
+            );
+            opacity: 0.5;
+        }
+
+        .article-raw::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(
+                90deg,
+                #000 0,
+                #000 4px,
+                white 4px,
+                white 8px
+            );
+            opacity: 0.5;
+        }
+
+        .article-raw img {
             width: 100%;
-            height: 500px;
+            height: 400px;
             object-fit: cover;
+            margin-bottom: -40px;
             position: relative;
-            margin-bottom: -80px;
             z-index: 2;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            filter: contrast(1.3) grayscale(30%);
+            border: 3px solid #000;
         }
 
-        .fold-text {
+        .article-raw-text {
             background: white;
             padding: 80px 60px 60px;
             position: relative;
             z-index: 3;
-            margin-left: 100px;
-            border-left: 8px solid var(--bg-warm);
+            margin-left: 80px;
+            border-left: 8px solid #E91E63;
+            transform: rotate(0.5deg);
         }
 
-        .fold-text h3 {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 20px;
+        .article-raw-text h3 {
+            font-size: 44px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            transform: rotate(-0.5deg) skew(-0.5deg);
         }
 
-        .fold-text p {
-            font-size: var(--type-body);
-            line-height: 1.8;
-            color: var(--text-soft);
-        }
-
-        /* OS Window chrome */
-        .window-frame {
-            border: 1px solid #999;
-            background: #f0f0f0;
-            margin: 160px auto;
-            max-width: 900px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .window-title {
-            background: linear-gradient(90deg, #0066CC, #0066CC);
-            color: white;
-            padding: 6px 12px;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .window-close {
-            width: 16px;
-            height: 16px;
-            background: white;
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .window-content {
-            padding: 20px;
-            background: white;
-        }
-
-        .window-image {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            background: #E0E0E0;
+        .article-raw-text p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #555;
             margin-bottom: 16px;
         }
 
-        .window-meta {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-soft);
-        }
-
-        /* Index table */
+        /* Index as ripped paper */
         .index-table {
             margin: 160px auto;
-            max-width: 900px;
-            padding: 0 60px;
-            font-family: var(--font-mono);
+            max-width: 950px;
+            padding: 40px;
+            background: #F5F5F0;
+            border: 2px dashed #000;
+            position: relative;
+            transform: rotate(-0.7deg);
+        }
+
+        .index-table::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 20%;
+            width: 15%;
+            height: 12px;
+            background: #E91E63;
+            opacity: 0.3;
+            transform: rotate(-3deg) skew(-2deg);
         }
 
         .index-row {
             display: grid;
-            grid-template-columns: 60px 1fr 120px 100px;
-            gap: 40px;
-            padding: 24px 0;
-            border-bottom: 1px solid #E0E0E0;
+            grid-template-columns: 50px 1fr 80px 120px;
+            gap: 30px;
+            padding: 20px 0;
+            border-bottom: 1px dashed #000;
+            font-family: var(--font-mono);
             font-size: 13px;
-            align-items: center;
+            transform: rotate(-0.3deg);
         }
 
         .index-row:first-child {
-            border-bottom: 2px solid var(--text-primary);
-            font-weight: 600;
-            padding: 12px 0;
-            color: var(--text-soft);
+            font-weight: 700;
+            border-bottom: 3px solid #000;
+            margin-bottom: 8px;
+            padding-bottom: 12px;
         }
 
         .index-num {
-            color: var(--text-soft);
+            color: #E91E63;
+            font-weight: 700;
         }
 
         .index-title {
-            color: var(--text-primary);
+            color: #000;
+            font-style: italic;
         }
 
-        /* Contact as torn paper */
-        .contact-tear {
+        /* Window frame - corrupted */
+        .window-corrupted {
+            margin: 160px auto;
+            max-width: 900px;
+            border: 4px solid;
+            border-color: #0066CC #0066CC #DFDFDF #DFDFDF;
+            background: #c0c0c0;
+            box-shadow: inset 1px 1px 0 0 white, inset -1px -1px 0 0 #808080;
+            transform: rotate(-0.8deg);
+        }
+
+        .window-title {
+            background: linear-gradient(90deg, #0066CC 0%, #1084D7 100%);
+            color: white;
+            padding: 2px 2px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid;
+            border-color: white #808080 #808080 white;
+        }
+
+        .window-close {
+            width: 16px;
+            height: 14px;
+            background: linear-gradient(135deg, #c0c0c0 0%, #dfdfdf 100%);
+            border: 2px solid;
+            border-color: white #808080 #808080 white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .window-content {
+            padding: 4px;
+            background: #c0c0c0;
+        }
+
+        .window-inner {
+            background: white;
+            padding: 12px;
+            border: 1px solid;
+            border-color: white #808080 #808080 white;
+        }
+
+        .window-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: #E0E0E0;
+            margin-bottom: 12px;
+            border: 1px solid #000;
+            filter: contrast(1.2) saturate(0.6);
+        }
+
+        .window-text h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .window-text p {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        /* Contact - torn, ugly */
+        .contact-raw {
             margin: 200px auto 80px;
-            max-width: 600px;
+            max-width: 700px;
             padding: 60px;
-            background: var(--bg-cream);
+            background: #FFF8E7;
+            border: 8px solid #000;
             position: relative;
-            padding-bottom: 40px;
+            transform: rotate(-2deg);
+            box-shadow:
+                -12px 12px 20px rgba(0,0,0,0.2);
         }
 
-        .contact-tear::after {
+        .contact-raw::before {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            height: 15px;
+            height: 3px;
             background: repeating-linear-gradient(
                 90deg,
-                transparent,
+                #E91E63 0,
+                #E91E63 8px,
                 transparent 8px,
-                var(--bg-cool) 8px,
-                var(--bg-cool) 12px
+                transparent 16px
             );
-            opacity: 0.6;
+            opacity: 0.7;
         }
 
-        .contact-tear h3 {
-            font-size: var(--type-section);
+        .contact-raw h3 {
+            font-size: 48px;
+            font-weight: 700;
             margin-bottom: 20px;
+            transform: rotate(-1deg) skew(-1deg);
+            letter-spacing: -1px;
         }
 
-        .contact-tear p {
-            font-size: var(--type-body);
-            line-height: 1.8;
-            color: var(--text-soft);
+        .contact-raw p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #333;
             margin-bottom: 30px;
+            transform: rotate(0.3deg);
         }
 
-        .contact-tear a {
+        .contact-raw a {
             font-family: var(--font-mono);
-            font-size: var(--type-label);
-            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
             text-decoration: none;
-            border-bottom: 2px solid var(--accent);
-            transition: all 0.2s;
+            border: 3px solid #E91E63;
+            padding: 12px 20px;
+            background: white;
+            display: inline-block;
+            transform: rotate(-2deg) skew(-1deg);
+            transition: all 0.1s;
+            letter-spacing: 1px;
         }
 
-        .contact-tear a:hover {
-            background: var(--accent);
+        .contact-raw a:hover {
+            background: #E91E63;
             color: white;
+            transform: rotate(0deg) skew(0deg) scale(1.05);
         }
 
         /* Footer */
         footer {
             font-family: var(--font-mono);
-            font-size: var(--type-meta);
-            color: var(--text-soft);
+            font-size: 12px;
+            color: #666;
             text-align: center;
-            padding: 120px 60px 60px;
-            border-top: 1px solid #E0E0E0;
+            padding: 100px 40px 60px;
+            border-top: 3px dashed #000;
             margin-top: 160px;
+            transform: rotate(-0.5deg);
+            background: linear-gradient(0deg, transparent 0%, rgba(233, 30, 99, 0.05) 100%);
         }
 
         .clock {
-            font-size: var(--type-label);
+            font-size: 22px;
             margin-bottom: 12px;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            transform: rotate(-1deg);
+            filter: contrast(1.2);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding-left: 20px;
                 height: 50vh;
+                padding: 20px;
+            }
+
+            .hero-text {
+                font-size: 80px;
             }
 
             nav {
-                left: 20px;
-                flex-direction: column;
-                gap: 12px;
+                left: 10px;
+                top: 10px;
             }
 
             .spread {
                 grid-template-columns: 1fr;
-                gap: 0;
-                padding: 0;
-                margin: 80px 0;
+                margin: 40px 0;
+                border: 2px solid #000;
             }
 
             .spread::before {
                 display: none;
             }
 
-            .page-left, .page-right {
+            .page {
                 padding: 40px 20px;
+                border-right: none;
+                border-bottom: 3px dotted #000;
             }
 
-            .fold-text {
+            .page-left {
+                border-right: none;
+                border-bottom: 4px dotted #000;
+            }
+
+            .article-raw {
+                padding: 40px 20px;
+                margin: 80px 0;
+            }
+
+            .article-raw-text {
                 margin-left: 0;
                 padding: 40px 20px;
             }
 
             .index-table {
-                padding: 0 20px;
-            }
-
-            .contact-tear {
-                max-width: 100%;
-                padding: 40px 20px;
-                margin-left: 0;
-                margin-right: 0;
+                padding: 20px;
+                margin: 80px 0;
             }
 
             .index-row {
                 grid-template-columns: 40px 1fr;
                 gap: 20px;
+                font-size: 12px;
+            }
+
+            .contact-raw {
+                padding: 40px 20px;
+                margin: 100px 0;
             }
 
             footer {
-                padding: 80px 20px 40px;
+                padding: 60px 20px 40px;
             }
         }
     </style>
 </head>
 <body>
     <nav>
-        <a href="#writing">Essays</a>
-        <a href="#archive">Archive</a>
+        <a href="#work">ESSAYS</a>
+        <a href="#visual">WORK</a>
     </nav>
 
     <section class="hero">
-        <span class="meta-label">Portfolio</span>
-        <div class="hero-text">
-            <span>Essays</span>
-            <span>& Type</span>
+        <div class="hero-content">
+            <span class="meta-label">— portfolio —</span>
+            <div class="hero-text">
+                <span>ESSAYS</span>
+                <span>&TYPE</span>
+            </div>
         </div>
     </section>
 
-    <section id="writing" class="spread">
-        <div class="page-left">
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=350&fit=crop" alt="" class="page-image skewed">
-            <div class="tape-mark tape-mark.top-left"></div>
-            <div class="tape-mark tape-mark.top-right"></div>
+    <section id="work" class="spread">
+        <div class="page page-left">
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=320&fit=crop" alt="" class="page-image">
             <h3 class="page-title">The Future of Digital Typography</h3>
-            <p class="page-subtitle">Variable fonts are reshaping how we approach type design and web performance</p>
-            <div class="page-meta">
-                <span>2026</span>
-                <span>Design Journal</span>
-            </div>
+            <p class="page-subtitle">Variable fonts reshape type design</p>
+            <div class="page-meta">2026 / Design Journal</div>
         </div>
 
-        <div class="page-right">
-            <div class="annotation">Notes—</div>
-            <p style="font-size: var(--type-body); line-height: 1.8; color: var(--text-soft); margin-bottom: 24px;">
-                The shift toward variable fonts represents a fundamental change in how we think about typography at scale. Instead of serving multiple static files for different weights and widths, designers can now define an entire typographic space with a single font file.
-            </p>
-            <p style="font-size: var(--type-body); line-height: 1.8; color: var(--text-soft); margin-bottom: 24px;">
-                This opens new possibilities: dynamic responsiveness, performance gains, and unprecedented expressive control. But it also demands a new literacy—designers must learn to think in dimensions rather than discrete choices.
-            </p>
-            <div class="footnote">
-                Published in Design Journal, March 2026. Read the full article at designjournal.com/typography-2026
+        <div class="page page-right">
+            <div class="scribble">NOTES →</div>
+            <div class="page-body">
+                <p>The shift toward variable fonts represents a fundamental change in how we think about typography at scale. Instead of serving multiple static files for different weights and widths, designers can now define an entire typographic space with a single font file.</p>
+                <p class="glitch">// Instead of discrete choices, we now have continuous dimensions. Weight, width, optical size become variables in a design system.</p>
+                <p>This opens new possibilities: dynamic responsiveness, performance gains, unprecedented expressive control.</p>
             </div>
         </div>
     </section>
 
-    <section class="article-fold">
-        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&h=500&fit=crop" alt="" class="fold-image tape">
-        <div class="fold-text">
+    <section class="article-raw">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&h=400&fit=crop" alt="">
+        <div class="article-raw-text">
             <h3>On Whitespace as Content</h3>
-            <p>Why negative space isn't empty. The most overlooked design decision is what to leave out. Whitespace—breathing room, margins, the void—isn't a default state. It's an active choice. In print, margins protect your eye. Online, they signal taste.</p>
+            <p>Why negative space isn't empty. The most overlooked design decision is what to leave out. Whitespace—breathing room, margins, the void—isn't a default state. It's an active choice.</p>
+            <p>In print, margins protect your eye. Online, they signal taste.</p>
         </div>
     </section>
 
     <section class="spread">
-        <div class="page-left">
-            <p style="font-size: var(--type-body); line-height: 1.8; color: var(--text-soft); margin-bottom: 20px;">
-                Every pixel matters when you're choosing not to fill it. This essay explores how emptiness shapes perception, how silence speaks louder than noise, and why your margins are your voice.
-            </p>
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=350&fit=crop&q=80" alt="" class="page-image" style="transform: rotate(1deg);">
+        <div class="page page-left">
+            <div class="page-body">
+                <p>Every pixel matters when you're choosing not to fill it. This essay explores how emptiness shapes perception, how silence speaks louder than noise.</p>
+                <p class="glitch">:: why your margins are your voice ::</p>
+                <p>Designers often fear empty space. We're trained to fill, to optimize, to make use of every inch. But the most sophisticated work knows when to stop.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=320&fit=crop&q=80" alt="" class="page-image" style="margin-top: 20px;">
         </div>
 
-        <div class="page-right">
-            <div style="background: var(--bg-warm); padding: 40px; margin-bottom: 30px;">
-                <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-soft); text-transform: uppercase; margin-bottom: 12px;">Published</p>
-                <p style="font-family: var(--font-display); font-size: 20px; font-weight: 600;">Design Observer</p>
-                <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-soft); margin-top: 12px;">June 2026</p>
+        <div class="page page-right">
+            <div style="background: #E8E8E0; padding: 40px; margin-bottom: 30px; border: 2px dashed #000; transform: rotate(1deg);">
+                <p style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; margin-bottom: 12px; opacity: 0.7;">Published in</p>
+                <p style="font-family: var(--font-display); font-size: 24px; font-weight: 700; transform: rotate(-0.5deg);">Design Observer</p>
+                <p style="font-family: var(--font-mono); font-size: 10px; margin-top: 12px; opacity: 0.7;">June 2026</p>
             </div>
-            <p style="font-size: var(--type-body); line-height: 1.8; color: var(--text-soft);">
-                Designers often fear empty space. We're trained to fill, to optimize, to make use of every inch. But the most sophisticated work knows when to stop.
-            </p>
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=320&fit=crop&q=60" alt="" class="page-image" style="transform: rotate(-1.5deg);">
         </div>
     </section>
 
-    <section id="archive" class="window-frame">
+    <section id="visual" class="window-corrupted">
         <div class="window-title">
-            <span>portfolio.html</span>
+            <span>portfolio.exe</span>
             <div class="window-close">×</div>
         </div>
         <div class="window-content">
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&h=300&fit=crop&q=60" alt="" class="window-image">
-            <h3 style="font-size: 20px; margin-bottom: 12px;">Brutalist Web Design: A Manifesto</h3>
-            <p style="font-size: var(--type-body); line-height: 1.6; color: var(--text-soft); margin-bottom: 16px;">
-                A polemic on restraint, intentionality, and editorial rigor in digital design. Why the best websites often look like they were designed in 1997.
-            </p>
-            <div class="window-meta">
-                <span style="display: inline; margin-right: 20px;">2025</span>
-                <span>Web Design Today</span>
+            <div class="window-inner">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&h=280&fit=crop&q=60" alt="" class="window-image">
+                <div class="window-text">
+                    <h3>Brutalist Web Design: A Manifesto</h3>
+                    <p>A polemic on restraint, intentionality, and editorial rigor in digital design. Why the best websites look like they were designed in 1997.</p>
+                    <p style="font-family: var(--font-mono); font-size: 11px; margin-top: 12px;">2025 / Web Design Today</p>
+                </div>
             </div>
         </div>
     </section>
@@ -617,9 +797,9 @@
         </div>
     </section>
 
-    <section class="contact-tear">
-        <h3>Get in touch</h3>
-        <p>Write about projects at the intersection of typography, editorial design, and digital craft. Commissions, collaborations, or just thoughts on type welcome.</p>
+    <section class="contact-raw">
+        <h3>Get in Touch</h3>
+        <p>Write about projects at the intersection of typography, editorial design, and digital craft. Commissions, collaborations, or thoughts on type welcome.</p>
         <a href="mailto:hello@example.com">hello@example.com</a>
     </section>
 

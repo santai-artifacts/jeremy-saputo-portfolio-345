@@ -41,27 +41,32 @@
             overflow-x: hidden;
         }
 
-        /* Cold open */
+        /* Hero with bleeding image */
         .hero {
-            height: var(--space-cold);
-            display: flex;
-            align-items: flex-end;
-            padding: 0 60px 60px;
             position: relative;
-        }
-
-        .hero-text {
-            font-size: var(--type-display);
-            font-weight: 400;
-            line-height: 0.95;
-            letter-spacing: -2px;
-            max-width: 100%;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-left: 60px;
+            padding-bottom: 60px;
             overflow: hidden;
         }
 
-        .hero-text span {
-            display: block;
-            margin-bottom: -8px;
+        .hero-image {
+            position: absolute;
+            top: 0;
+            right: -100px;
+            width: 60%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
         .meta-label {
@@ -70,8 +75,22 @@
             color: var(--text-soft);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 120px;
+            margin-bottom: 80px;
             display: block;
+        }
+
+        .hero-text {
+            font-size: var(--type-display);
+            font-weight: 400;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            max-width: 600px;
+            overflow: hidden;
+        }
+
+        .hero-text span {
+            display: block;
+            margin-bottom: -12px;
         }
 
         /* Navigation */
@@ -82,12 +101,13 @@
             font-family: var(--font-mono);
             font-size: var(--type-label);
             z-index: 1000;
+            display: flex;
+            gap: 40px;
         }
 
         nav a {
             text-decoration: none;
             color: var(--text-primary);
-            margin-right: 40px;
             border-bottom: 1px solid transparent;
             transition: border-color 0.2s;
         }
@@ -98,7 +118,7 @@
 
         /* Main content */
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 60px;
         }
@@ -114,50 +134,53 @@
             line-height: 1.2;
         }
 
-        /* Writing index */
+        /* Writing with photos */
         .writing-list {
             list-style: none;
         }
 
         .writing-item {
-            margin-bottom: 56px;
-            padding-bottom: 56px;
-            border-bottom: 1px solid #E0E0E0;
-            display: flex;
-            gap: 40px;
-            align-items: flex-start;
+            margin-bottom: 120px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
         }
 
-        .writing-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .writing-item:nth-child(even) {
+            direction: rtl;
+        }
+
+        .writing-item:nth-child(even) > * {
+            direction: ltr;
         }
 
         .writing-index {
             font-family: var(--font-mono);
             font-size: var(--type-label);
             color: var(--text-soft);
-            min-width: 40px;
-            flex-shrink: 0;
+            position: absolute;
+            left: -80px;
+            top: 0;
         }
 
         .writing-content {
-            flex: 1;
+            position: relative;
         }
 
         .writing-title {
             font-size: var(--type-label);
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
             line-height: 1.3;
+            font-size: 28px;
         }
 
         .writing-excerpt {
             font-size: var(--type-body);
             color: var(--text-soft);
-            margin-bottom: 12px;
-            line-height: 1.6;
+            margin-bottom: 20px;
+            line-height: 1.8;
             font-style: italic;
             font-family: Georgia, serif;
         }
@@ -175,20 +198,139 @@
             margin-right: 20px;
         }
 
-        /* Contact section */
-        .contact-block {
-            background-color: var(--bg-warm);
-            padding: 40px 60px;
-            margin: 80px -60px 80px;
-            display: inline-block;
+        .writing-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background-color: #E0E0E0;
+        }
+
+        /* Overlapping photo section */
+        .photo-feature {
+            position: relative;
+            margin: 160px 0;
+            padding: 80px 0;
+        }
+
+        .photo-feature-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            margin-bottom: -60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .photo-feature-text {
+            background: white;
+            padding: 60px;
+            padding-top: 80px;
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+            margin-left: 100px;
+        }
+
+        .photo-feature-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .photo-feature-body {
+            font-size: var(--type-body);
+            line-height: 1.8;
+            color: var(--text-soft);
+        }
+
+        /* Asymmetrical gallery */
+        .gallery {
+            margin: 160px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            grid-auto-rows: auto;
+        }
+
+        .gallery-item {
+            position: relative;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1 / 3;
+        }
+
+        .gallery-item:nth-child(2) {
+            grid-column: 2;
+        }
+
+        .gallery-item:nth-child(3) {
+            grid-column: 2;
+        }
+
+        .gallery-item:nth-child(4) {
+            grid-column: 1 / 3;
+            margin-top: -40px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            object-fit: cover;
+            background-color: #E0E0E0;
+            display: block;
+        }
+
+        .gallery-item:nth-child(1) .gallery-image {
+            height: 600px;
+        }
+
+        .gallery-item:nth-child(4) .gallery-image {
+            height: 350px;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(255,255,255,0.95);
+            padding: 12px 16px;
             font-family: var(--font-mono);
+            font-size: var(--type-meta);
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Contact section */
+        .contact-section {
+            margin: 200px 0 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .contact-text {
+            font-size: var(--type-body);
+            line-height: 1.8;
+            color: var(--text-soft);
+        }
+
+        .contact-block {
+            font-family: var(--font-mono);
+            font-size: var(--type-body);
+            background-color: var(--bg-warm);
+            padding: 40px;
         }
 
         .contact-block a {
             color: var(--text-primary);
             text-decoration: none;
             border-bottom: 2px solid var(--accent);
-            transition: background-color 0.2s;
+            transition: all 0.2s;
         }
 
         .contact-block a:hover {
@@ -214,82 +356,74 @@
             letter-spacing: 2px;
         }
 
-        /* Gallery grid */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-bottom: var(--space-loose);
-        }
-
-        .gallery-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .gallery-image {
-            width: 100%;
-            aspect-ratio: 4/5;
-            object-fit: cover;
-            background-color: #E0E0E0;
-            margin-bottom: var(--space-tight);
-        }
-
-        .gallery-caption {
-            font-family: var(--font-mono);
-            font-size: var(--type-meta);
-            color: var(--text-soft);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1.4;
-        }
-
-        .gallery-title {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 24px;
-            }
             :root {
                 --type-display: 64px;
                 --space-cold: 50vh;
             }
 
             .hero {
-                padding: 0 20px 40px;
+                padding-left: 20px;
+                padding-bottom: 40px;
             }
 
-            .container, .contact-block {
-                padding-left: 20px;
-                padding-right: 20px;
+            .hero-image {
+                display: none;
+            }
+
+            .container {
+                padding: 0 20px;
             }
 
             nav {
                 left: 20px;
-            }
-
-            .contact-block {
-                margin-left: -20px;
-                margin-right: -20px;
+                flex-direction: column;
+                gap: 12px;
             }
 
             .writing-item {
-                flex-direction: column;
-                gap: 8px;
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-bottom: 80px;
+            }
+
+            .writing-item:nth-child(even) {
+                direction: ltr;
+            }
+
+            .writing-index {
+                position: static;
+                margin-bottom: 8px;
+            }
+
+            .photo-feature-text {
+                margin-left: 0;
+                padding-top: 60px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .gallery-item {
+                grid-column: 1 !important;
+                grid-row: auto !important;
+                margin-top: 0 !important;
+            }
+
+            .gallery-image {
+                height: 300px !important;
+            }
+
+            .contact-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
 
             footer {
                 padding: 80px 20px 40px;
-            }
-
-            .gallery-grid {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -302,29 +436,30 @@
 </head>
 <body>
     <nav>
-        <a href="#work">Writing</a>
-        <a href="#visual">Visual</a>
-        <a href="#about">About</a>
+        <a href="#writing">Writing</a>
+        <a href="#gallery">Work</a>
+        <a href="#contact">Contact</a>
     </nav>
 
     <section class="hero">
-        <div>
-            <span class="meta-label">Writing Portfolio</span>
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop" alt="" class="hero-image">
+        <div class="hero-content">
+            <span class="meta-label">Portfolio</span>
             <div class="hero-text">
                 <span>Essays &</span>
-                <span>Articles</span>
+                <span>Ideas</span>
             </div>
         </div>
     </section>
 
     <div class="container">
-        <section id="work">
-            <h2 class="section-title">Selected Work</h2>
+        <section id="writing" style="margin-top: 160px;">
+            <h2 class="section-title">Writing</h2>
 
             <ul class="writing-list">
                 <li class="writing-item">
-                    <span class="writing-index">01</span>
                     <div class="writing-content">
+                        <div class="writing-index">01</div>
                         <h3 class="writing-title">The Future of Digital Typography</h3>
                         <p class="writing-excerpt">Exploring how variable fonts are reshaping the way we think about type design and web performance.</p>
                         <div class="writing-meta">
@@ -332,11 +467,12 @@
                             <span>Design Journal</span>
                         </div>
                     </div>
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop" alt="Typography" class="writing-image">
                 </li>
 
                 <li class="writing-item">
-                    <span class="writing-index">02</span>
                     <div class="writing-content">
+                        <div class="writing-index">02</div>
                         <h3 class="writing-title">On Whitespace as Content</h3>
                         <p class="writing-excerpt">Why negative space isn't empty—how intentional emptiness creates meaning in editorial design.</p>
                         <div class="writing-meta">
@@ -344,11 +480,12 @@
                             <span>Design Observer</span>
                         </div>
                     </div>
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop&q=80" alt="Whitespace" class="writing-image">
                 </li>
 
                 <li class="writing-item">
-                    <span class="writing-index">03</span>
                     <div class="writing-content">
+                        <div class="writing-index">03</div>
                         <h3 class="writing-title">Brutalist Web Design: A Manifesto</h3>
                         <p class="writing-excerpt">Why restraint, intentionality, and editorial rigor matter more than ever in digital design.</p>
                         <div class="writing-meta">
@@ -356,87 +493,55 @@
                             <span>Web Design Today</span>
                         </div>
                     </div>
-                </li>
-
-                <li class="writing-item">
-                    <span class="writing-index">04</span>
-                    <div class="writing-content">
-                        <h3 class="writing-title">Reading Culture in the Age of Feeds</h3>
-                        <p class="writing-excerpt">How algorithmic feeds are changing our relationship with text, depth, and sustained attention.</p>
-                        <div class="writing-meta">
-                            <span>2025</span>
-                            <span>The Typographic</span>
-                        </div>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop&q=60" alt="Web Design" class="writing-image">
                 </li>
             </ul>
         </section>
 
-        <section id="visual" style="margin-top: 160px;">
-            <h2 class="section-title">Visual Work</h2>
-
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop" alt="Editorial design layout" class="gallery-image">
-                    <div class="gallery-caption">
-                        <div class="gallery-title">Magazine Spread</div>
-                        2026 • Editorial Design
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=80" alt="Typography studies" class="gallery-image">
-                    <div class="gallery-caption">
-                        <div class="gallery-title">Type Studies</div>
-                        2026 • Typography
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=60" alt="Poster design" class="gallery-image">
-                    <div class="gallery-caption">
-                        <div class="gallery-title">Exhibition Poster</div>
-                        2025 • Print Design
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=90" alt="Branding system" class="gallery-image">
-                    <div class="gallery-caption">
-                        <div class="gallery-title">Branding System</div>
-                        2025 • Brand Identity
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=75" alt="Web design mockup" class="gallery-image">
-                    <div class="gallery-caption">
-                        <div class="gallery-title">Web Interface</div>
-                        2025 • UI Design
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=85" alt="Book cover design" class="gallery-image">
-                    <div class="gallery-caption">
-                        <div class="gallery-title">Book Cover</div>
-                        2024 • Cover Design
-                    </div>
+        <section class="photo-feature">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&h=500&fit=crop" alt="Featured work" class="photo-feature-image">
+            <div class="photo-feature-text">
+                <h3 class="photo-feature-title">On Seeing Clearly</h3>
+                <p class="photo-feature-body">A deep dive into visual literacy and how we parse meaning from images in the digital age. Published in Eye Magazine, 2026.</p>
+                <div class="writing-meta" style="margin-top: 20px;">
+                    <span>2026</span>
+                    <span>Eye Magazine</span>
                 </div>
             </div>
         </section>
 
-        <section id="about" style="margin-top: 160px;">
-            <h2 class="section-title">About</h2>
-            <p style="font-size: var(--type-body); line-height: 1.8; max-width: 600px; color: var(--text-soft);">
-                I write about design, typography, and the intersections between physical and digital media. Interested in how constraints shape creativity, how intentionality creates meaning, and why the details matter.
-            </p>
+        <section id="gallery">
+            <h2 class="section-title">Visual Work</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=600&fit=crop" alt="Editorial design" class="gallery-image">
+                    <div class="gallery-caption">Magazine Spread</div>
+                </div>
 
-            <div style="margin-top: 80px;">
-                <p style="font-family: var(--font-mono); font-size: var(--type-meta); color: var(--text-soft); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px;">
-                    Get in touch
-                </p>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=300&fit=crop&q=80" alt="Branding" class="gallery-image">
+                    <div class="gallery-caption">Brand System</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=300&fit=crop&q=60" alt="Poster" class="gallery-image">
+                    <div class="gallery-caption">Exhibition Poster</div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&h=350&fit=crop" alt="Installation" class="gallery-image">
+                    <div class="gallery-caption">Typography Installation</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" style="margin-top: 200px;">
+            <div class="contact-section">
+                <div class="contact-text">
+                    <p>I'm interested in projects at the intersection of typography, editorial design, and digital craftsmanship. Reach out about commissions, collaborations, or just to discuss type.</p>
+                </div>
                 <div class="contact-block">
+                    <p style="margin-bottom: 20px; color: var(--text-soft);">Get in touch:</p>
                     <a href="mailto:hello@example.com">hello@example.com</a>
                 </div>
             </div>

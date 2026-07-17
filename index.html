@@ -6,7 +6,6 @@
     <title>Writing Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @charset "UTF-8";
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -19,7 +18,7 @@
             --dirty-white: #E8E4DC;
             --accent: #E91E63;
             --accent-dim: rgba(233,30,99,0.25);
-            --yellow-tape: rgba(220,190,100,0.35);
+            --yellow-tape: rgba(220,190,100,0.4);
 
             --font-display: 'EB Garamond', 'Georgia', serif;
             --font-mono: 'Courier Prime', 'Courier New', monospace;
@@ -36,7 +35,7 @@
             overflow-x: hidden;
         }
 
-        /* Photocopy grain over everything */
+        /* Photocopy grain */
         body::after {
             content: '';
             position: fixed;
@@ -47,14 +46,10 @@
             mix-blend-mode: overlay;
         }
 
-        /* ============================================
-           NAVIGATION — system voice, small, quiet
-           ============================================ */
+        /* ── NAV ── */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
             font-family: var(--font-mono);
             font-size: 11px;
@@ -68,21 +63,12 @@
             backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--mid-grey);
         }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
+        nav a { color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
         nav a:hover { color: var(--cream); }
-
         .nav-left { display: flex; gap: 32px; }
         .nav-right { opacity: 0.5; }
 
-        /* ============================================
-           HERO — cold open, 60% empty, then violence
-           ============================================ */
+        /* ── HERO ── */
         .hero {
             height: 100vh;
             display: flex;
@@ -92,7 +78,6 @@
             position: relative;
             background: var(--black);
         }
-
         .hero-meta {
             font-family: var(--font-mono);
             font-size: 10px;
@@ -101,7 +86,6 @@
             color: var(--text-muted);
             margin-bottom: 40px;
         }
-
         .hero-title {
             font-size: clamp(80px, 18vw, 220px);
             font-weight: 400;
@@ -110,11 +94,7 @@
             color: var(--cream);
             max-width: 110vw;
         }
-
-        .hero-title span {
-            display: block;
-        }
-
+        .hero-title span { display: block; }
         .hero-title span:nth-child(2) {
             margin-left: 8vw;
             color: var(--accent);
@@ -122,7 +102,6 @@
             transform: rotate(-1deg);
             display: inline-block;
         }
-
         .hero-scrawl {
             font-family: var(--font-hand);
             font-size: 32px;
@@ -134,267 +113,397 @@
             transform: rotate(-8deg);
         }
 
-        /* ============================================
-           SECTION: DARK SPREAD — book gutter
-           ============================================ */
-        .spread {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 80vh;
+
+        /* ═══════════════════════════════════════════
+           ESSAY 01 — GIANT PULL QUOTE fills viewport
+           Title runs as a marquee, text is secondary
+           ═══════════════════════════════════════════ */
+        .essay-pullquote {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 40px;
             position: relative;
-            border-top: 1px solid var(--mid-grey);
-            border-bottom: 1px solid var(--mid-grey);
-        }
-
-        .spread::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: var(--mid-grey);
-            z-index: 10;
-        }
-
-        .spread-page {
-            padding: 80px 60px;
-            position: relative;
-        }
-
-        .spread-page.left {
             background: var(--off-black);
+            border-top: 1px solid var(--mid-grey);
         }
 
-        .spread-page.right {
-            background: var(--dark-grey);
-        }
-
-        .spread-image {
-            width: 100%;
-            aspect-ratio: 4/3;
-            object-fit: cover;
-            filter: contrast(1.3) saturate(0.4) brightness(0.8);
-            border: none;
-            margin-bottom: 16px;
-        }
-
-        .spread-image.taped {
-            transform: rotate(-2deg);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        .tape {
+        .pullquote-num {
             position: absolute;
-            height: 10px;
-            width: 60px;
-            background: var(--yellow-tape);
-            z-index: 20;
-        }
-
-        .tape-tl { top: -5px; left: 30px; transform: rotate(-4deg); }
-        .tape-tr { top: -5px; right: 30px; transform: rotate(3deg); }
-
-        .spread-title {
-            font-size: 36px;
-            font-weight: 700;
-            line-height: 1;
-            letter-spacing: -1px;
-            margin: 24px 0 12px;
-        }
-
-        .spread-excerpt {
-            font-style: italic;
-            font-size: 16px;
-            line-height: 1.5;
+            top: 40px;
+            left: 40px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             color: var(--text-muted);
-            margin-bottom: 16px;
         }
 
-        .spread-meta {
+        .pullquote-text {
+            font-size: clamp(36px, 7vw, 100px);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            text-align: center;
+            max-width: 90vw;
+            color: var(--cream);
+        }
+
+        .pullquote-text em {
+            color: var(--accent);
+            font-style: normal;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-dim);
+            text-underline-offset: 8px;
+            text-decoration-thickness: 3px;
+        }
+
+        .pullquote-source {
+            margin-top: 60px;
             font-family: var(--font-mono);
             font-size: 10px;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-muted);
-            background: var(--accent-dim);
-            padding: 6px 10px;
-            display: inline-block;
+            text-align: center;
         }
 
-        .scribble {
+        .pullquote-scrawl {
             font-family: var(--font-hand);
-            font-size: 44px;
+            font-size: 28px;
             color: var(--accent);
             opacity: 0.35;
-            transform: rotate(-4deg);
-            margin: 20px 0 30px;
-            line-height: 1;
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            transform: rotate(-12deg);
         }
 
-        .body-text {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #999;
+        .pullquote-image {
+            position: absolute;
+            top: 80px;
+            right: 80px;
+            width: 200px;
+            height: 260px;
+            object-fit: cover;
+            filter: contrast(1.4) saturate(0.3) brightness(0.5);
+            opacity: 0.3;
+            transform: rotate(3deg);
         }
 
-        .body-text p { margin-bottom: 16px; }
 
-        .glitch-line {
-            font-family: var(--font-system);
-            font-size: 12px;
-            color: var(--accent);
-            opacity: 0.6;
-            letter-spacing: 1px;
-            margin: 16px 0;
-            transform: skew(-1deg);
+        /* ═══════════════════════════════════════════
+           ESSAY 02 — SINGLE OBJECT, VAST FIELD
+           One image centered in emptiness, museum plinth
+           ═══════════════════════════════════════════ */
+        .essay-artifact {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 40px;
+            position: relative;
+            background: var(--black);
         }
 
-        .footnote {
-            border-top: 1px solid var(--mid-grey);
-            margin-top: 40px;
-            padding-top: 16px;
+        .artifact-image {
+            width: min(500px, 60vw);
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            filter: contrast(1.3) saturate(0.3) brightness(0.7);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+
+        .artifact-caption {
+            margin-top: 16px;
             font-family: var(--font-mono);
             font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             color: var(--text-muted);
-            letter-spacing: 1px;
+            text-align: center;
         }
 
-        /* ============================================
-           FULL-BLEED IMAGE + OVERLAPPING TEXT
-           ============================================ */
-        .feature {
-            position: relative;
-            margin: 0;
-            background: var(--black);
-        }
-
-        .feature-image {
-            width: 100%;
-            height: 60vh;
-            object-fit: cover;
-            filter: contrast(1.4) saturate(0.3) brightness(0.6);
-            display: block;
-        }
-
-        .feature-overlay {
+        .artifact-title {
             position: absolute;
-            bottom: -60px;
-            left: 60px;
-            background: var(--black);
-            padding: 40px 50px;
-            border-left: 6px solid var(--accent);
-            max-width: 600px;
-            z-index: 10;
-        }
-
-        .feature-overlay h3 {
-            font-size: 42px;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-90deg);
+            transform-origin: left center;
+            font-size: clamp(28px, 4vw, 48px);
             font-weight: 700;
-            line-height: 0.95;
-            letter-spacing: -2px;
-            margin-bottom: 16px;
+            letter-spacing: -1px;
+            line-height: 1;
+            white-space: nowrap;
+            color: var(--cream);
         }
 
-        .feature-overlay p {
-            font-size: 15px;
-            line-height: 1.7;
+        .artifact-body {
+            position: absolute;
+            right: 40px;
+            bottom: 80px;
+            max-width: 280px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .artifact-scrawl {
+            font-family: var(--font-hand);
+            font-size: 24px;
+            color: var(--accent);
+            opacity: 0.4;
+            position: absolute;
+            top: 60px;
+            right: 80px;
+            transform: rotate(-6deg);
+        }
+
+        .artifact-num {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             color: var(--text-muted);
         }
 
-        .feature-overlay .spread-meta {
-            margin-top: 20px;
-        }
 
-        /* ============================================
-           INVERTED CREAM SECTION — zine flyer energy
-           ============================================ */
-        .invert-section {
+        /* ═══════════════════════════════════════════
+           ESSAY 03 — INVERTED ZINE FLYER
+           Cream background, collaged, tilted, aggressive
+           ═══════════════════════════════════════════ */
+        .essay-zine {
             background: var(--cream);
             color: var(--black);
-            padding: 120px 60px;
-            margin-top: 100px;
+            padding: 0;
             position: relative;
-            transform: rotate(-0.3deg);
+            transform: rotate(-0.4deg);
+            overflow: hidden;
         }
 
-        .invert-section::before {
+        .essay-zine::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
+            top: 0; left: 0; right: 0;
+            height: 8px;
             background: repeating-linear-gradient(90deg, var(--black) 0, var(--black) 4px, transparent 4px, transparent 8px);
         }
 
-        .invert-spread {
+        .zine-inner {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            max-width: 1100px;
-            margin: 0 auto;
-            align-items: start;
+            grid-template-columns: 1fr;
+            position: relative;
+            min-height: 100vh;
         }
 
-        .invert-image {
-            width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: cover;
-            filter: contrast(1.3) saturate(0.5);
-            border: 3px solid var(--black);
-            transform: rotate(-1.5deg);
-            box-shadow: 8px 8px 0 rgba(0,0,0,0.15);
-        }
-
-        .invert-text h3 {
-            font-size: 38px;
+        .zine-title {
+            font-size: clamp(60px, 12vw, 160px);
             font-weight: 700;
-            line-height: 1;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            padding: 120px 60px 0;
+            max-width: 80%;
+            transform: rotate(-1deg);
         }
 
-        .invert-text p {
-            font-size: 15px;
+        .zine-image {
+            position: absolute;
+            right: -40px;
+            top: 80px;
+            width: 40%;
+            height: 70%;
+            object-fit: cover;
+            filter: contrast(1.3) saturate(0.4);
+            border: 4px solid var(--black);
+            transform: rotate(3deg);
+            box-shadow: -8px 8px 0 rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+
+        .zine-body {
+            padding: 60px;
+            max-width: 55%;
+            font-size: 16px;
             line-height: 1.7;
             color: var(--mid-grey);
-            margin-bottom: 16px;
         }
 
-        .invert-meta {
+        .zine-body p { margin-bottom: 16px; }
+
+        .zine-meta {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: var(--black);
+            color: var(--cream);
+            padding: 8px 12px;
+            display: inline-block;
+            transform: rotate(-2deg);
+            margin-top: 12px;
+        }
+
+        .zine-scrawl {
+            font-family: var(--font-hand);
+            font-size: 40px;
+            color: var(--accent);
+            opacity: 0.5;
+            transform: rotate(-6deg);
+            position: absolute;
+            bottom: 80px;
+            left: 60px;
+            z-index: 5;
+        }
+
+        .zine-stamp {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            width: 100px;
+            height: 100px;
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            transform: rotate(15deg);
+            opacity: 0.4;
+        }
+
+
+        /* ═══════════════════════════════════════════
+           ESSAY 04 — OVERLAPPING COLLAGE
+           Text on top of image, layers fighting each other
+           ═══════════════════════════════════════════ */
+        .essay-collage {
+            min-height: 100vh;
+            position: relative;
+            background: var(--dark-grey);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .collage-image-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.4) saturate(0.2) brightness(0.25);
+            z-index: 1;
+        }
+
+        .collage-content {
+            position: relative;
+            z-index: 10;
+            padding: 80px;
+            width: 100%;
+        }
+
+        .collage-num {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .collage-title {
+            font-size: clamp(48px, 10vw, 140px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            color: var(--cream);
+            max-width: 70%;
+            margin-bottom: 40px;
+            mix-blend-mode: difference;
+        }
+
+        .collage-excerpt {
+            max-width: 400px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #999;
+            margin-left: auto;
+            margin-right: 80px;
+        }
+
+        .collage-tape {
+            position: absolute;
+            top: 60px;
+            right: 120px;
+            width: 120px;
+            height: 16px;
+            background: var(--yellow-tape);
+            transform: rotate(-8deg);
+            z-index: 20;
+        }
+
+        .collage-meta {
+            position: absolute;
+            bottom: 40px;
+            left: 80px;
             font-family: var(--font-mono);
             font-size: 10px;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--text-muted);
-            background: var(--black);
-            color: var(--cream);
+            z-index: 10;
+            background: var(--accent-dim);
             padding: 6px 10px;
-            display: inline-block;
-            transform: rotate(-1deg);
         }
 
-        .invert-scribble {
+        .collage-scrawl {
             font-family: var(--font-hand);
             font-size: 36px;
             color: var(--accent);
-            opacity: 0.5;
-            transform: rotate(-5deg);
-            margin-bottom: 20px;
+            opacity: 0.4;
+            position: absolute;
+            top: 50%;
+            right: 60px;
+            transform: rotate(-90deg) translateX(50%);
+            transform-origin: right center;
+            white-space: nowrap;
+            z-index: 20;
         }
 
-        /* ============================================
-           OS WINDOW — deadpan system voice
-           ============================================ */
+        .collage-photo {
+            position: absolute;
+            bottom: 80px;
+            right: 80px;
+            width: 220px;
+            height: 300px;
+            object-fit: cover;
+            filter: contrast(1.3) saturate(0.3) brightness(0.6);
+            border: 3px solid var(--cream);
+            transform: rotate(4deg);
+            z-index: 15;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        }
+
+
+        /* ── OS WINDOW ── */
         .os-window {
             max-width: 850px;
             margin: 120px auto;
             border: 1px solid var(--mid-grey);
             background: var(--dark-grey);
         }
-
         .os-bar {
             background: var(--mid-grey);
             padding: 6px 12px;
@@ -406,27 +515,12 @@
             align-items: center;
             border-bottom: 1px solid var(--black);
         }
-
-        .os-dots {
-            display: flex;
-            gap: 6px;
-        }
-
-        .os-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 1px solid var(--text-muted);
-        }
-
+        .os-dots { display: flex; gap: 6px; }
+        .os-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--text-muted); }
         .os-dot.red { background: #FF5F57; border-color: #E0443E; }
         .os-dot.yellow { background: #FEBC2E; border-color: #D4A123; }
         .os-dot.green { background: #28C840; border-color: #1DAD2B; }
-
-        .os-body {
-            padding: 20px;
-        }
-
+        .os-body { padding: 20px; }
         .os-image {
             width: 100%;
             height: 260px;
@@ -434,28 +528,17 @@
             filter: contrast(1.2) saturate(0.5) brightness(0.7);
             margin-bottom: 16px;
         }
+        .os-body h3 { font-size: 20px; margin-bottom: 8px; }
+        .os-body p { font-size: 13px; line-height: 1.5; color: var(--text-muted); }
 
-        .os-body h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
 
-        .os-body p {
-            font-size: 13px;
-            line-height: 1.5;
-            color: var(--text-muted);
-        }
-
-        /* ============================================
-           INDEX TABLE — ledger / spreadsheet
-           ============================================ */
+        /* ── LEDGER ── */
         .ledger {
             max-width: 950px;
             margin: 120px auto;
             padding: 0 40px;
             font-family: var(--font-mono);
         }
-
         .ledger-header {
             font-size: 10px;
             letter-spacing: 3px;
@@ -463,7 +546,6 @@
             color: var(--text-muted);
             margin-bottom: 24px;
         }
-
         .ledger-row {
             display: grid;
             grid-template-columns: 50px 1fr 80px 140px;
@@ -474,11 +556,7 @@
             align-items: baseline;
             transition: background 0.1s;
         }
-
-        .ledger-row:hover {
-            background: var(--dark-grey);
-        }
-
+        .ledger-row:hover { background: var(--dark-grey); }
         .ledger-row.head {
             border-bottom: 2px solid var(--cream);
             font-size: 10px;
@@ -487,66 +565,50 @@
             color: var(--text-muted);
             padding: 12px 0;
         }
-
         .ledger-num { color: var(--accent); font-weight: 700; }
         .ledger-title { color: var(--cream); }
         .ledger-year { color: var(--text-muted); }
         .ledger-pub { color: var(--text-muted); font-style: italic; font-family: var(--font-display); }
 
-        /* ============================================
-           CONTACT — torn, raw
-           ============================================ */
-        .contact {
-            max-width: 700px;
-            margin: 160px auto 80px;
-            padding: 60px;
-            background: var(--dark-grey);
-            border-left: 8px solid var(--accent);
+
+        /* ── CONTACT — just an email in a void ── */
+        .contact-void {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             position: relative;
+            padding: 80px 40px;
         }
 
-        .contact::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -8px;
-            right: 0;
-            height: 4px;
-            background: repeating-linear-gradient(90deg, var(--accent) 0, var(--accent) 6px, transparent 6px, transparent 12px);
-            opacity: 0.5;
-        }
-
-        .contact h3 {
-            font-size: 48px;
-            font-weight: 400;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-        }
-
-        .contact p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-        }
-
-        .contact a {
+        .contact-void a {
             font-family: var(--font-mono);
-            font-size: 20px;
+            font-size: clamp(18px, 3vw, 32px);
             color: var(--cream);
             text-decoration: none;
             border-bottom: 2px solid var(--accent);
             padding-bottom: 4px;
             transition: all 0.15s;
+            letter-spacing: 1px;
         }
 
-        .contact a:hover {
+        .contact-void a:hover { color: var(--accent); }
+
+        .contact-scrawl {
+            font-family: var(--font-hand);
+            font-size: 24px;
             color: var(--accent);
+            opacity: 0.35;
+            position: absolute;
+            transform: rotate(-10deg);
         }
 
-        /* ============================================
-           FOOTER — live clock, system voice
-           ============================================ */
+        .contact-scrawl.top { top: 30%; left: 15%; }
+        .contact-scrawl.bottom { bottom: 25%; right: 12%; transform: rotate(6deg); }
+
+
+        /* ── FOOTER ── */
         footer {
             font-family: var(--font-mono);
             font-size: 11px;
@@ -555,7 +617,6 @@
             padding: 80px 40px 40px;
             border-top: 1px solid var(--mid-grey);
         }
-
         .clock {
             font-size: 22px;
             letter-spacing: 4px;
@@ -563,9 +624,8 @@
             color: var(--cream);
         }
 
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
+
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             nav { padding: 12px 20px; font-size: 10px; }
             .nav-left { gap: 20px; }
@@ -574,27 +634,53 @@
             .hero-title { font-size: clamp(60px, 16vw, 120px); }
             .hero-scrawl { display: none; }
 
-            .spread { grid-template-columns: 1fr; }
-            .spread::before { display: none; }
-            .spread-page { padding: 60px 20px; }
-            .spread-page.left { border-bottom: 1px solid var(--mid-grey); }
+            .pullquote-text { font-size: clamp(28px, 8vw, 60px); }
+            .pullquote-image { display: none; }
+            .pullquote-scrawl { display: none; }
 
-            .feature-overlay { left: 20px; right: 20px; bottom: -40px; padding: 30px; }
-            .feature-overlay h3 { font-size: 28px; }
+            .artifact-title {
+                position: static;
+                transform: none;
+                font-size: 32px;
+                margin-bottom: 40px;
+                padding: 0 20px;
+                text-align: center;
+            }
+            .artifact-body {
+                position: static;
+                max-width: 100%;
+                padding: 0 20px;
+                margin-top: 30px;
+                text-align: center;
+            }
+            .artifact-scrawl { display: none; }
 
-            .invert-section { padding: 80px 20px; }
-            .invert-spread { grid-template-columns: 1fr; gap: 40px; }
+            .essay-zine { transform: none; }
+            .zine-title { font-size: clamp(40px, 10vw, 80px); padding: 80px 20px 0; max-width: 100%; }
+            .zine-image {
+                position: static;
+                width: 100%;
+                height: 300px;
+                transform: none;
+                margin: 30px 0;
+                border-left: none; border-right: none;
+            }
+            .zine-body { max-width: 100%; padding: 20px; }
+            .zine-scrawl { display: none; }
+            .zine-stamp { display: none; }
+
+            .collage-content { padding: 40px 20px; }
+            .collage-title { max-width: 100%; font-size: clamp(36px, 10vw, 80px); }
+            .collage-excerpt { margin-right: 0; margin-left: 0; margin-top: 20px; }
+            .collage-photo { display: none; }
+            .collage-tape { display: none; }
+            .collage-scrawl { display: none; }
 
             .os-window { margin: 80px 20px; }
 
             .ledger { padding: 0 20px; margin: 80px auto; }
             .ledger-row { grid-template-columns: 40px 1fr; gap: 16px; font-size: 12px; }
             .ledger-year, .ledger-pub { display: none; }
-            .ledger-row.head .ledger-year,
-            .ledger-row.head .ledger-pub { display: none; }
-
-            .contact { margin: 100px 20px 60px; padding: 40px 24px; }
-            .contact h3 { font-size: 36px; }
 
             footer { padding: 60px 20px 30px; }
         }
@@ -606,12 +692,11 @@
         <div class="nav-left">
             <a href="#work">Selected Work</a>
             <a href="#index">Index</a>
-            <a href="#contact">Contact</a>
         </div>
         <div class="nav-right" id="nav-clock">00:00:00</div>
     </nav>
 
-    <!-- HERO — cold open -->
+    <!-- HERO -->
     <section class="hero">
         <div class="hero-meta">Portfolio — Selected Essays & Visual Work</div>
         <h1 class="hero-title">
@@ -621,80 +706,69 @@
         <div class="hero-scrawl">notes, fragments, drafts →</div>
     </section>
 
-    <!-- SPREAD 1 — dark book pages -->
-    <section id="work" class="spread">
-        <div class="spread-page left">
-            <div style="position: relative; display: inline-block; width: 100%;">
-                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&h=450&fit=crop" alt="Books on typography" class="spread-image taped">
-                <div class="tape tape-tl"></div>
-                <div class="tape tape-tr"></div>
-            </div>
-            <h3 class="spread-title">The Future of Digital Typography</h3>
-            <p class="spread-excerpt">Variable fonts reshape how we approach type design—continuous dimensions replace discrete choices.</p>
-            <div class="spread-meta">2026 / Design Journal</div>
+
+    <!-- ═══ ESSAY 01: GIANT PULL QUOTE ═══ -->
+    <section id="work" class="essay-pullquote">
+        <div class="pullquote-num">01 — The Future of Digital Typography</div>
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=520&fit=crop" alt="" class="pullquote-image">
+        <div class="pullquote-text">
+            "Designers must learn to think in <em>dimensions</em> rather than discrete choices"
         </div>
-        <div class="spread-page right">
-            <div class="scribble">Notes →</div>
-            <div class="body-text">
-                <p>The shift toward variable fonts represents a fundamental change. Instead of serving multiple static files for different weights, designers define an entire typographic space with a single file.</p>
-                <div class="glitch-line">// weight, width, optical size → variables in a design system</div>
-                <p>This opens new possibilities: dynamic responsiveness, performance gains, unprecedented expressive control. But it demands a new literacy—designers must learn to think in dimensions rather than discrete choices.</p>
-            </div>
-            <div class="footnote">Published Design Journal, March 2026. 4,200 words.</div>
+        <div class="pullquote-source">
+            The Future of Digital Typography — Design Journal, 2026<br>
+            4,200 words on variable fonts, continuous design spaces, and the end of static type
         </div>
+        <div class="pullquote-scrawl">this changes everything</div>
     </section>
 
-    <!-- FULL-BLEED FEATURE -->
-    <section class="feature">
-        <img src="https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=1200&h=600&fit=crop" alt="Whitespace study" class="feature-image">
-        <div class="feature-overlay">
-            <h3>On Whitespace as Content</h3>
-            <p>Why negative space isn't empty. The most overlooked design decision is what to leave out. Whitespace—breathing room, margins, the void—isn't a default. It's an active choice.</p>
-            <div class="spread-meta">2026 / Design Observer</div>
+
+    <!-- ═══ ESSAY 02: SINGLE OBJECT, VAST FIELD ═══ -->
+    <section class="essay-artifact">
+        <div class="artifact-num">02 — On Whitespace as Content</div>
+        <div class="artifact-title">On Whitespace<br>as Content</div>
+        <img src="https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=500&h=625&fit=crop" alt="" class="artifact-image">
+        <div class="artifact-caption">Design Observer — 2026</div>
+        <div class="artifact-body">
+            Why negative space isn't empty. The most overlooked design decision is what to leave out. Whitespace—breathing room, margins, the void—isn't a default. It's an active choice. Your margins are your voice.
         </div>
+        <div class="artifact-scrawl">emptiness = meaning</div>
     </section>
 
-    <!-- INVERTED CREAM SECTION — zine flyer -->
-    <section class="invert-section">
-        <div class="invert-spread">
-            <div>
-                <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=500&h=660&fit=crop" alt="Analog photography" class="invert-image">
-            </div>
-            <div class="invert-text">
-                <div class="invert-scribble">this one matters—</div>
-                <h3>Brutalist Web Design: A Manifesto</h3>
+
+    <!-- ═══ ESSAY 03: ZINE FLYER ═══ -->
+    <section class="essay-zine">
+        <div class="zine-inner">
+            <h3 class="zine-title">Brutalist Web Design: A Manifesto</h3>
+            <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&h=800&fit=crop" alt="" class="zine-image">
+            <div class="zine-body">
                 <p>A polemic on restraint, intentionality, and editorial rigor. Why the best websites often look like they were designed in 1997—and why that's the point.</p>
                 <p>The web has become a monoculture of rounded corners, gradient backgrounds, and sans-serif body copy. Every SaaS landing page looks the same. This essay argues for a return to rawness.</p>
-                <div class="invert-meta">2025 / Web Design Today</div>
+                <div class="zine-meta">2025 / Web Design Today</div>
             </div>
+            <div class="zine-scrawl">burn the templates</div>
+            <div class="zine-stamp">READ<br>THIS</div>
         </div>
     </section>
 
-    <!-- SPREAD 2 -->
-    <section class="spread">
-        <div class="spread-page left">
-            <div class="body-text">
-                <p>Algorithmic feeds have fundamentally altered how we encounter text. The scroll replaced the page. The snippet replaced the paragraph. Depth became a luxury good.</p>
-                <div class="glitch-line">:: sustained attention as resistance ::</div>
-                <p>This essay traces the history of reading culture from the codex to the feed, arguing that the format of text shapes its meaning as much as the words themselves.</p>
-            </div>
-            <div style="position: relative; display: inline-block; width: 100%; margin-top: 30px;">
-                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&h=450&fit=crop" alt="Library" class="spread-image" style="transform: rotate(1.5deg);">
-            </div>
+
+    <!-- ═══ ESSAY 04: OVERLAPPING COLLAGE ═══ -->
+    <section class="essay-collage">
+        <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1200&h=800&fit=crop" alt="" class="collage-image-bg">
+        <div class="collage-tape"></div>
+        <div class="collage-content">
+            <div class="collage-num">04 — Reading Culture</div>
+            <h3 class="collage-title">Reading Culture in the Age of Feeds</h3>
+            <p class="collage-excerpt">
+                The scroll replaced the page. The snippet replaced the paragraph. Depth became a luxury good. This essay traces the history of reading from the codex to the feed.
+            </p>
         </div>
-        <div class="spread-page right">
-            <div style="background: var(--off-black); padding: 30px; margin-bottom: 30px; border: 1px dashed var(--mid-grey);">
-                <div style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 12px;">Published in</div>
-                <div style="font-size: 28px; font-weight: 700; letter-spacing: -1px;">The Typographic</div>
-                <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 12px;">November 2025</div>
-            </div>
-            <h3 class="spread-title">Reading Culture in the Age of Feeds</h3>
-            <p class="spread-excerpt">How algorithmic feeds changed our relationship with text, depth, and sustained attention.</p>
-            <div class="spread-meta">2025 / The Typographic</div>
-        </div>
+        <div class="collage-meta">2025 / The Typographic</div>
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=440&h=600&fit=crop" alt="" class="collage-photo">
+        <div class="collage-scrawl">sustained attention as resistance</div>
     </section>
 
-    <!-- OS WINDOW — system voice, deadpan -->
+
+    <!-- OS WINDOW -->
     <section style="padding: 0 40px;">
         <div class="os-window">
             <div class="os-bar">
@@ -706,7 +780,7 @@
                 <span>portfolio.exe — selected work</span>
             </div>
             <div class="os-body">
-                <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=900&h=260&fit=crop" alt="Desk with notebook" class="os-image">
+                <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=900&h=260&fit=crop" alt="" class="os-image">
                 <h3>On Seeing Clearly</h3>
                 <p>A deep dive into visual literacy and how we parse meaning from images in the digital age. How the camera phone collapsed the distance between seeing and publishing, and what we lost in the compression.</p>
                 <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 12px; letter-spacing: 2px; text-transform: uppercase;">2026 / Eye Magazine</div>
@@ -714,7 +788,8 @@
         </div>
     </section>
 
-    <!-- INDEX — ledger table -->
+
+    <!-- INDEX -->
     <section id="index" class="ledger">
         <div class="ledger-header">Complete Index</div>
         <div class="ledger-row head">
@@ -755,12 +830,14 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="contact">
-        <h3>Get in touch</h3>
-        <p>Commissions, collaborations, or thoughts on type. Writing at the intersection of typography, editorial design, and digital craft.</p>
+
+    <!-- CONTACT — just an email in darkness -->
+    <section class="contact-void">
+        <div class="contact-scrawl top">write to me ↓</div>
         <a href="mailto:hello@example.com">hello@example.com</a>
+        <div class="contact-scrawl bottom">— always open</div>
     </section>
+
 
     <footer>
         <div class="clock" id="clock">00:00:00</div>

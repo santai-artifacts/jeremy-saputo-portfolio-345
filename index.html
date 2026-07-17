@@ -214,8 +214,48 @@
             letter-spacing: 2px;
         }
 
+        /* Gallery grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: var(--space-loose);
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-image {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            background-color: #E0E0E0;
+            margin-bottom: var(--space-tight);
+        }
+
+        .gallery-caption {
+            font-family: var(--font-mono);
+            font-size: var(--type-meta);
+            color: var(--text-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+        }
+
+        .gallery-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
             :root {
                 --type-display: 64px;
                 --space-cold: 50vh;
@@ -247,6 +287,10 @@
             footer {
                 padding: 80px 20px 40px;
             }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Text smoothing */
@@ -258,7 +302,8 @@
 </head>
 <body>
     <nav>
-        <a href="#work">Work</a>
+        <a href="#work">Writing</a>
+        <a href="#visual">Visual</a>
         <a href="#about">About</a>
     </nav>
 
@@ -325,6 +370,60 @@
                     </div>
                 </li>
             </ul>
+        </section>
+
+        <section id="visual" style="margin-top: 160px;">
+            <h2 class="section-title">Visual Work</h2>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop" alt="Editorial design layout" class="gallery-image">
+                    <div class="gallery-caption">
+                        <div class="gallery-title">Magazine Spread</div>
+                        2026 • Editorial Design
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=80" alt="Typography studies" class="gallery-image">
+                    <div class="gallery-caption">
+                        <div class="gallery-title">Type Studies</div>
+                        2026 • Typography
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=60" alt="Poster design" class="gallery-image">
+                    <div class="gallery-caption">
+                        <div class="gallery-title">Exhibition Poster</div>
+                        2025 • Print Design
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=90" alt="Branding system" class="gallery-image">
+                    <div class="gallery-caption">
+                        <div class="gallery-title">Branding System</div>
+                        2025 • Brand Identity
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=75" alt="Web design mockup" class="gallery-image">
+                    <div class="gallery-caption">
+                        <div class="gallery-title">Web Interface</div>
+                        2025 • UI Design
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=500&fit=crop&q=85" alt="Book cover design" class="gallery-image">
+                    <div class="gallery-caption">
+                        <div class="gallery-title">Book Cover</div>
+                        2024 • Cover Design
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="about" style="margin-top: 160px;">

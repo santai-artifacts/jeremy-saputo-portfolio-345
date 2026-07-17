@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --type-meta: 12px;
+            --type-body: 15px;
+            --type-label: 22px;
+            --type-section: 48px;
+            --type-display: 140px;
+
+            --space-tight: 8px;
+            --space-loose: 80px;
+            --space-cold: 55vh;
+
+            --bg-warm: #F5F5F2;
+            --bg-cool: #FFFFFF;
+            --text-primary: #000000;
+            --text-soft: #666666;
+            --accent: #E91E63;
+
+            --font-display: 'EB Garamond', serif;
+            --font-mono: 'Courier Prime', monospace;
+        }
+
+        body {
+            background-color: var(--bg-cool);
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            line-height: 1.4;
+            overflow-x: hidden;
+        }
+
+        /* Cold open */
+        .hero {
+            height: var(--space-cold);
+            display: flex;
+            align-items: flex-end;
+            padding: 0 60px 60px;
+            position: relative;
+        }
+
+        .hero-text {
+            font-size: var(--type-display);
+            font-weight: 400;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .hero-text span {
+            display: block;
+            margin-bottom: -8px;
+        }
+
+        .meta-label {
+            font-family: var(--font-mono);
+            font-size: var(--type-meta);
+            color: var(--text-soft);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 120px;
+            display: block;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 24px;
+            left: 60px;
+            font-family: var(--font-mono);
+            font-size: var(--type-label);
+            z-index: 1000;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-primary);
+            margin-right: 40px;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        nav a:hover {
+            border-bottom: 1px solid var(--text-primary);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        section {
+            margin-bottom: var(--space-loose);
+        }
+
+        .section-title {
+            font-size: var(--type-section);
+            font-weight: 400;
+            margin-bottom: 60px;
+            line-height: 1.2;
+        }
+
+        /* Writing index */
+        .writing-list {
+            list-style: none;
+        }
+
+        .writing-item {
+            margin-bottom: 56px;
+            padding-bottom: 56px;
+            border-bottom: 1px solid #E0E0E0;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .writing-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .writing-index {
+            font-family: var(--font-mono);
+            font-size: var(--type-label);
+            color: var(--text-soft);
+            min-width: 40px;
+            flex-shrink: 0;
+        }
+
+        .writing-content {
+            flex: 1;
+        }
+
+        .writing-title {
+            font-size: var(--type-label);
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .writing-excerpt {
+            font-size: var(--type-body);
+            color: var(--text-soft);
+            margin-bottom: 12px;
+            line-height: 1.6;
+            font-style: italic;
+            font-family: Georgia, serif;
+        }
+
+        .writing-meta {
+            font-family: var(--font-mono);
+            font-size: var(--type-meta);
+            color: var(--text-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .writing-meta span {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        /* Contact section */
+        .contact-block {
+            background-color: var(--bg-warm);
+            padding: 40px 60px;
+            margin: 80px -60px 80px;
+            display: inline-block;
+            font-family: var(--font-mono);
+        }
+
+        .contact-block a {
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent);
+            transition: background-color 0.2s;
+        }
+
+        .contact-block a:hover {
+            background-color: var(--accent);
+            color: white;
+            padding: 2px 4px;
+        }
+
+        /* Footer clock */
+        footer {
+            font-family: var(--font-mono);
+            font-size: var(--type-meta);
+            color: var(--text-soft);
+            text-align: center;
+            padding: 120px 60px 60px;
+            border-top: 1px solid #E0E0E0;
+            margin-top: 160px;
+        }
+
+        .clock {
+            font-size: var(--type-label);
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            :root {
+                --type-display: 64px;
+                --space-cold: 50vh;
+            }
+
+            .hero {
+                padding: 0 20px 40px;
+            }
+
+            .container, .contact-block {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            nav {
+                left: 20px;
+            }
+
+            .contact-block {
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+
+            .writing-item {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            footer {
+                padding: 80px 20px 40px;
+            }
+        }
+
+        /* Text smoothing */
+        h1, h2, h3 {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <section class="hero">
+        <div>
+            <span class="meta-label">Writing Portfolio</span>
+            <div class="hero-text">
+                <span>Essays &</span>
+                <span>Articles</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="work">
+            <h2 class="section-title">Selected Work</h2>
+
+            <ul class="writing-list">
+                <li class="writing-item">
+                    <span class="writing-index">01</span>
+                    <div class="writing-content">
+                        <h3 class="writing-title">The Future of Digital Typography</h3>
+                        <p class="writing-excerpt">Exploring how variable fonts are reshaping the way we think about type design and web performance.</p>
+                        <div class="writing-meta">
+                            <span>2026</span>
+                            <span>Design Journal</span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="writing-item">
+                    <span class="writing-index">02</span>
+                    <div class="writing-content">
+                        <h3 class="writing-title">On Whitespace as Content</h3>
+                        <p class="writing-excerpt">Why negative space isn't empty—how intentional emptiness creates meaning in editorial design.</p>
+                        <div class="writing-meta">
+                            <span>2026</span>
+                            <span>Design Observer</span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="writing-item">
+                    <span class="writing-index">03</span>
+                    <div class="writing-content">
+                        <h3 class="writing-title">Brutalist Web Design: A Manifesto</h3>
+                        <p class="writing-excerpt">Why restraint, intentionality, and editorial rigor matter more than ever in digital design.</p>
+                        <div class="writing-meta">
+                            <span>2025</span>
+                            <span>Web Design Today</span>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="writing-item">
+                    <span class="writing-index">04</span>
+                    <div class="writing-content">
+                        <h3 class="writing-title">Reading Culture in the Age of Feeds</h3>
+                        <p class="writing-excerpt">How algorithmic feeds are changing our relationship with text, depth, and sustained attention.</p>
+                        <div class="writing-meta">
+                            <span>2025</span>
+                            <span>The Typographic</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="about" style="margin-top: 160px;">
+            <h2 class="section-title">About</h2>
+            <p style="font-size: var(--type-body); line-height: 1.8; max-width: 600px; color: var(--text-soft);">
+                I write about design, typography, and the intersections between physical and digital media. Interested in how constraints shape creativity, how intentionality creates meaning, and why the details matter.
+            </p>
+
+            <div style="margin-top: 80px;">
+                <p style="font-family: var(--font-mono); font-size: var(--type-meta); color: var(--text-soft); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px;">
+                    Get in touch
+                </p>
+                <div class="contact-block">
+                    <a href="mailto:hello@example.com">hello@example.com</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="clock" id="clock">00:00:00</div>
+        <p>Portfolio • 2026</p>
+    </footer>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

@@ -4,196 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Writing Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=EB+Garamond:ital@0;1&family=Caveat:wght@400;700&family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @charset "UTF-8";
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --type-meta: 12px;
-            --type-body: 15px;
-            --type-label: 22px;
-            --type-section: 48px;
-            --type-display: 140px;
+            --black: #0A0A0A;
+            --off-black: #111111;
+            --dark-grey: #1A1A1A;
+            --mid-grey: #333333;
+            --text-muted: #777777;
+            --cream: #F5F2EB;
+            --dirty-white: #E8E4DC;
+            --accent: #E91E63;
+            --accent-dim: rgba(233,30,99,0.25);
+            --yellow-tape: rgba(220,190,100,0.35);
 
-            --font-display: 'EB Garamond', serif;
-            --font-mono: 'Courier Prime', monospace;
+            --font-display: 'EB Garamond', 'Georgia', serif;
+            --font-mono: 'Courier Prime', 'Courier New', monospace;
             --font-hand: 'Caveat', cursive;
-            --font-glitch: 'Inconsolata', monospace;
+            --font-system: 'Inconsolata', monospace;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            background: #F5F5F0;
-            color: #000;
+            background: var(--black);
+            color: var(--cream);
             font-family: var(--font-display);
-            line-height: 1.2;
             overflow-x: hidden;
-            background-image:
-                repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,.02) 2px, rgba(0,0,0,.02) 4px),
-                repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0,0,0,.01) 2px, rgba(0,0,0,.01) 4px);
         }
 
-        /* Noise overlay */
-        body::before {
+        /* Photocopy grain over everything */
+        body::after {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                url('data:image/svg+xml?utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" seed="2"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
             pointer-events: none;
-            z-index: -1;
+            z-index: 9999;
+            mix-blend-mode: overlay;
         }
 
-        /* Hero - violent, tilted */
-        .hero {
-            height: 65vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 40px 40px;
-            background: linear-gradient(125deg, #F5F5F0 0%, #E8E8E0 50%, #F5F5F0 100%);
-            position: relative;
-            overflow: hidden;
-            transform: rotate(-0.5deg);
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -10%;
-            left: -20%;
-            width: 200%;
-            height: 120%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent 0,
-                transparent 2px,
-                rgba(0,0,0,0.02) 2px,
-                rgba(0,0,0,0.02) 4px
-            );
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
+        /* ============================================
+           NAVIGATION — system voice, small, quiet
+           ============================================ */
+        nav {
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent 0,
-                transparent 1px,
-                rgba(0,0,0,0.01) 1px,
-                rgba(0,0,0,0.01) 2px
-            );
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-        }
-
-        .meta-label {
-            font-family: var(--font-mono);
-            font-size: 10px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 120px;
-            display: block;
-            transform: rotate(-2deg) skew(-1deg);
-            opacity: 0.7;
-        }
-
-        .hero-text {
-            font-size: 180px;
-            font-weight: 400;
-            line-height: 0.9;
-            letter-spacing: -4px;
-            max-width: 120%;
-            overflow: visible;
-            position: relative;
-        }
-
-        .hero-text span {
-            display: block;
-            margin-bottom: -20px;
-            text-shadow:
-                2px 2px 0 rgba(233, 30, 99, 0.1),
-                -1px -1px 0 rgba(0,0,0,0.05);
-            transform: rotate(-1deg) skew(-0.5deg);
-            filter: contrast(1.1);
-        }
-
-        .hero-text span:first-child {
-            transform: rotate(-1.5deg) skew(-1deg) translateX(-10px);
-        }
-
-        .hero-text span:last-child {
-            transform: rotate(0.8deg) skew(0.5deg) translateX(20px);
-        }
-
-        /* Navigation - chaotic */
-        nav {
-            position: fixed;
-            top: 20px;
-            left: 30px;
-            font-family: var(--font-mono);
-            font-size: 14px;
             z-index: 1000;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             display: flex;
-            flex-direction: column;
-            gap: 2px;
+            justify-content: space-between;
+            padding: 16px 40px;
+            color: var(--text-muted);
+            background: rgba(10,10,10,0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--mid-grey);
         }
 
         nav a {
+            color: var(--text-muted);
             text-decoration: none;
-            color: #000;
+            transition: color 0.15s;
+        }
+
+        nav a:hover { color: var(--cream); }
+
+        .nav-left { display: flex; gap: 32px; }
+        .nav-right { opacity: 0.5; }
+
+        /* ============================================
+           HERO — cold open, 60% empty, then violence
+           ============================================ */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 40px 60px;
+            position: relative;
+            background: var(--black);
+        }
+
+        .hero-meta {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .hero-title {
+            font-size: clamp(80px, 18vw, 220px);
+            font-weight: 400;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            color: var(--cream);
+            max-width: 110vw;
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        .hero-title span:nth-child(2) {
+            margin-left: 8vw;
+            color: var(--accent);
+            font-style: italic;
             transform: rotate(-1deg);
-            border: 1px solid rgba(0,0,0,0.2);
-            padding: 4px 8px;
-            background: rgba(255,255,255,0.5);
             display: inline-block;
-            width: fit-content;
-            transition: all 0.1s;
-            filter: contrast(1.2);
         }
 
-        nav a:nth-child(1) {
-            transform: rotate(2deg) skew(1deg);
+        .hero-scrawl {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            color: var(--accent);
+            opacity: 0.4;
+            position: absolute;
+            right: 60px;
+            bottom: 120px;
+            transform: rotate(-8deg);
         }
 
-        nav a:nth-child(2) {
-            transform: rotate(-1.5deg) skew(-0.5deg);
-            margin-left: 10px;
-        }
-
-        nav a:hover {
-            background: #E91E63;
-            color: white;
-            transform: rotate(0deg) scale(1.1);
-        }
-
-        /* Brutal spreads */
+        /* ============================================
+           SECTION: DARK SPREAD — book gutter
+           ============================================ */
         .spread {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0;
-            margin: 80px 0;
+            min-height: 80vh;
             position: relative;
-            background: white;
-            border: 3px solid #000;
-            transform: rotate(-0.3deg);
+            border-top: 1px solid var(--mid-grey);
+            border-bottom: 1px solid var(--mid-grey);
         }
 
         .spread::before {
@@ -202,623 +152,631 @@
             left: 50%;
             top: 0;
             bottom: 0;
-            width: 4px;
-            background: repeating-linear-gradient(
-                0deg,
-                #000 0,
-                #000 20px,
-                transparent 20px,
-                transparent 40px
-            );
+            width: 1px;
+            background: var(--mid-grey);
             z-index: 10;
         }
 
-        .page {
-            padding: 60px;
+        .spread-page {
+            padding: 80px 60px;
             position: relative;
-            overflow: hidden;
         }
 
-        .page-left {
-            background: linear-gradient(135deg, #FBF8F3 0%, #F5F5F0 100%);
-            border-right: 4px dotted #000;
+        .spread-page.left {
+            background: var(--off-black);
         }
 
-        .page-right {
-            background: #FFFFFF;
+        .spread-page.right {
+            background: var(--dark-grey);
         }
 
-        .page-image {
+        .spread-image {
             width: 100%;
-            height: 320px;
+            aspect-ratio: 4/3;
             object-fit: cover;
-            margin-bottom: 20px;
-            filter: contrast(1.2) saturate(0.7);
-            transform: rotate(-2deg);
-            border: 2px solid #000;
-            box-shadow:
-                -4px 4px 0 rgba(0,0,0,0.1),
-                8px -8px 0 rgba(233, 30, 99, 0.15);
+            filter: contrast(1.3) saturate(0.4) brightness(0.8);
+            border: none;
+            margin-bottom: 16px;
         }
 
-        .page-image:nth-child(2) {
-            transform: rotate(1.5deg) skew(-0.5deg);
+        .spread-image.taped {
+            transform: rotate(-2deg);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .tape {
+            position: absolute;
+            height: 10px;
+            width: 60px;
+            background: var(--yellow-tape);
+            z-index: 20;
+        }
+
+        .tape-tl { top: -5px; left: 30px; transform: rotate(-4deg); }
+        .tape-tr { top: -5px; right: 30px; transform: rotate(3deg); }
+
+        .spread-title {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -1px;
+            margin: 24px 0 12px;
+        }
+
+        .spread-excerpt {
+            font-style: italic;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .spread-meta {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--accent-dim);
+            padding: 6px 10px;
+            display: inline-block;
         }
 
         .scribble {
             font-family: var(--font-hand);
-            font-size: 48px;
-            color: #E91E63;
-            opacity: 0.5;
-            transform: rotate(-3deg) skew(-2deg);
-            margin: 20px 0;
-            line-height: 0.9;
-            filter: blur(0.5px);
-        }
-
-        .page-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin: 16px 0;
+            font-size: 44px;
+            color: var(--accent);
+            opacity: 0.35;
+            transform: rotate(-4deg);
+            margin: 20px 0 30px;
             line-height: 1;
-            transform: rotate(-0.5deg) skew(-0.5deg);
-            letter-spacing: -1px;
         }
 
-        .page-subtitle {
-            font-family: var(--font-display);
-            font-size: 16px;
-            color: #666;
-            margin: 12px 0;
-            line-height: 1.3;
-            font-style: italic;
-            transform: rotate(0.5deg);
+        .body-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #999;
         }
 
-        .page-body {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #333;
-            margin: 20px 0;
+        .body-text p { margin-bottom: 16px; }
+
+        .glitch-line {
+            font-family: var(--font-system);
+            font-size: 12px;
+            color: var(--accent);
+            opacity: 0.6;
+            letter-spacing: 1px;
+            margin: 16px 0;
+            transform: skew(-1deg);
         }
 
-        .page-body p {
-            margin-bottom: 12px;
-            transform: rotate(-0.2deg);
-        }
-
-        .page-body p:nth-child(odd) {
-            opacity: 0.95;
-        }
-
-        .page-meta {
+        .footnote {
+            border-top: 1px solid var(--mid-grey);
+            margin-top: 40px;
+            padding-top: 16px;
             font-family: var(--font-mono);
-            font-size: 11px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 16px;
-            transform: rotate(-1deg);
-            background: rgba(233, 30, 99, 0.1);
-            padding: 8px;
-            display: inline-block;
-        }
-
-        /* Glitch effect on text */
-        .glitch {
-            font-family: var(--font-glitch);
-            font-size: 13px;
-            color: #E91E63;
-            transform: rotate(-2deg) skew(-1deg);
-            line-height: 1.4;
-            opacity: 0.8;
-            filter: brightness(0.9);
+            font-size: 10px;
+            color: var(--text-muted);
             letter-spacing: 1px;
         }
 
-        /* Torn/photocopied section */
-        .article-raw {
-            margin: 120px auto;
-            max-width: 1000px;
-            padding: 60px;
-            background: white;
-            border: 6px solid #000;
+        /* ============================================
+           FULL-BLEED IMAGE + OVERLAPPING TEXT
+           ============================================ */
+        .feature {
             position: relative;
-            transform: rotate(-1deg);
-            box-shadow:
-                -8px 8px 0 rgba(0,0,0,0.2),
-                inset 0 0 20px rgba(0,0,0,0.05);
+            margin: 0;
+            background: var(--black);
         }
 
-        .article-raw::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: repeating-linear-gradient(
-                90deg,
-                #000 0,
-                #000 3px,
-                white 3px,
-                white 6px
-            );
-            opacity: 0.5;
-        }
-
-        .article-raw::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: repeating-linear-gradient(
-                90deg,
-                #000 0,
-                #000 4px,
-                white 4px,
-                white 8px
-            );
-            opacity: 0.5;
-        }
-
-        .article-raw img {
+        .feature-image {
             width: 100%;
-            height: 400px;
+            height: 60vh;
             object-fit: cover;
-            margin-bottom: -40px;
-            position: relative;
-            z-index: 2;
-            filter: contrast(1.3) grayscale(30%);
-            border: 3px solid #000;
+            filter: contrast(1.4) saturate(0.3) brightness(0.6);
+            display: block;
         }
 
-        .article-raw-text {
-            background: white;
-            padding: 80px 60px 60px;
-            position: relative;
-            z-index: 3;
-            margin-left: 80px;
-            border-left: 8px solid #E91E63;
-            transform: rotate(0.5deg);
+        .feature-overlay {
+            position: absolute;
+            bottom: -60px;
+            left: 60px;
+            background: var(--black);
+            padding: 40px 50px;
+            border-left: 6px solid var(--accent);
+            max-width: 600px;
+            z-index: 10;
         }
 
-        .article-raw-text h3 {
-            font-size: 44px;
+        .feature-overlay h3 {
+            font-size: 42px;
             font-weight: 700;
-            margin-bottom: 16px;
-            line-height: 0.9;
+            line-height: 0.95;
             letter-spacing: -2px;
-            transform: rotate(-0.5deg) skew(-0.5deg);
+            margin-bottom: 16px;
         }
 
-        .article-raw-text p {
+        .feature-overlay p {
             font-size: 15px;
             line-height: 1.7;
-            color: #555;
-            margin-bottom: 16px;
+            color: var(--text-muted);
         }
 
-        /* Index as ripped paper */
-        .index-table {
-            margin: 160px auto;
-            max-width: 950px;
-            padding: 40px;
-            background: #F5F5F0;
-            border: 2px dashed #000;
+        .feature-overlay .spread-meta {
+            margin-top: 20px;
+        }
+
+        /* ============================================
+           INVERTED CREAM SECTION — zine flyer energy
+           ============================================ */
+        .invert-section {
+            background: var(--cream);
+            color: var(--black);
+            padding: 120px 60px;
+            margin-top: 100px;
             position: relative;
-            transform: rotate(-0.7deg);
-        }
-
-        .index-table::before {
-            content: '';
-            position: absolute;
-            top: -12px;
-            left: 20%;
-            width: 15%;
-            height: 12px;
-            background: #E91E63;
-            opacity: 0.3;
-            transform: rotate(-3deg) skew(-2deg);
-        }
-
-        .index-row {
-            display: grid;
-            grid-template-columns: 50px 1fr 80px 120px;
-            gap: 30px;
-            padding: 20px 0;
-            border-bottom: 1px dashed #000;
-            font-family: var(--font-mono);
-            font-size: 13px;
             transform: rotate(-0.3deg);
         }
 
-        .index-row:first-child {
-            font-weight: 700;
-            border-bottom: 3px solid #000;
-            margin-bottom: 8px;
-            padding-bottom: 12px;
-        }
-
-        .index-num {
-            color: #E91E63;
-            font-weight: 700;
-        }
-
-        .index-title {
-            color: #000;
-            font-style: italic;
-        }
-
-        /* Window frame - corrupted */
-        .window-corrupted {
-            margin: 160px auto;
-            max-width: 900px;
-            border: 4px solid;
-            border-color: #0066CC #0066CC #DFDFDF #DFDFDF;
-            background: #c0c0c0;
-            box-shadow: inset 1px 1px 0 0 white, inset -1px -1px 0 0 #808080;
-            transform: rotate(-0.8deg);
-        }
-
-        .window-title {
-            background: linear-gradient(90deg, #0066CC 0%, #1084D7 100%);
-            color: white;
-            padding: 2px 2px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid;
-            border-color: white #808080 #808080 white;
-        }
-
-        .window-close {
-            width: 16px;
-            height: 14px;
-            background: linear-gradient(135deg, #c0c0c0 0%, #dfdfdf 100%);
-            border: 2px solid;
-            border-color: white #808080 #808080 white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .window-content {
-            padding: 4px;
-            background: #c0c0c0;
-        }
-
-        .window-inner {
-            background: white;
-            padding: 12px;
-            border: 1px solid;
-            border-color: white #808080 #808080 white;
-        }
-
-        .window-image {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            background: #E0E0E0;
-            margin-bottom: 12px;
-            border: 1px solid #000;
-            filter: contrast(1.2) saturate(0.6);
-        }
-
-        .window-text h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .window-text p {
-            font-size: 12px;
-            line-height: 1.5;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        /* Contact - torn, ugly */
-        .contact-raw {
-            margin: 200px auto 80px;
-            max-width: 700px;
-            padding: 60px;
-            background: #FFF8E7;
-            border: 8px solid #000;
-            position: relative;
-            transform: rotate(-2deg);
-            box-shadow:
-                -12px 12px 20px rgba(0,0,0,0.2);
-        }
-
-        .contact-raw::before {
+        .invert-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: repeating-linear-gradient(
-                90deg,
-                #E91E63 0,
-                #E91E63 8px,
-                transparent 8px,
-                transparent 16px
-            );
-            opacity: 0.7;
+            height: 6px;
+            background: repeating-linear-gradient(90deg, var(--black) 0, var(--black) 4px, transparent 4px, transparent 8px);
         }
 
-        .contact-raw h3 {
-            font-size: 48px;
+        .invert-spread {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .invert-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            filter: contrast(1.3) saturate(0.5);
+            border: 3px solid var(--black);
+            transform: rotate(-1.5deg);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.15);
+        }
+
+        .invert-text h3 {
+            font-size: 38px;
             font-weight: 700;
+            line-height: 1;
+            letter-spacing: -1px;
             margin-bottom: 20px;
-            transform: rotate(-1deg) skew(-1deg);
+        }
+
+        .invert-text p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--mid-grey);
+            margin-bottom: 16px;
+        }
+
+        .invert-meta {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            background: var(--black);
+            color: var(--cream);
+            padding: 6px 10px;
+            display: inline-block;
+            transform: rotate(-1deg);
+        }
+
+        .invert-scribble {
+            font-family: var(--font-hand);
+            font-size: 36px;
+            color: var(--accent);
+            opacity: 0.5;
+            transform: rotate(-5deg);
+            margin-bottom: 20px;
+        }
+
+        /* ============================================
+           OS WINDOW — deadpan system voice
+           ============================================ */
+        .os-window {
+            max-width: 850px;
+            margin: 120px auto;
+            border: 1px solid var(--mid-grey);
+            background: var(--dark-grey);
+        }
+
+        .os-bar {
+            background: var(--mid-grey);
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--black);
+        }
+
+        .os-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .os-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid var(--text-muted);
+        }
+
+        .os-dot.red { background: #FF5F57; border-color: #E0443E; }
+        .os-dot.yellow { background: #FEBC2E; border-color: #D4A123; }
+        .os-dot.green { background: #28C840; border-color: #1DAD2B; }
+
+        .os-body {
+            padding: 20px;
+        }
+
+        .os-image {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            filter: contrast(1.2) saturate(0.5) brightness(0.7);
+            margin-bottom: 16px;
+        }
+
+        .os-body h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .os-body p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        /* ============================================
+           INDEX TABLE — ledger / spreadsheet
+           ============================================ */
+        .ledger {
+            max-width: 950px;
+            margin: 120px auto;
+            padding: 0 40px;
+            font-family: var(--font-mono);
+        }
+
+        .ledger-header {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .ledger-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 80px 140px;
+            gap: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--mid-grey);
+            font-size: 13px;
+            align-items: baseline;
+            transition: background 0.1s;
+        }
+
+        .ledger-row:hover {
+            background: var(--dark-grey);
+        }
+
+        .ledger-row.head {
+            border-bottom: 2px solid var(--cream);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 12px 0;
+        }
+
+        .ledger-num { color: var(--accent); font-weight: 700; }
+        .ledger-title { color: var(--cream); }
+        .ledger-year { color: var(--text-muted); }
+        .ledger-pub { color: var(--text-muted); font-style: italic; font-family: var(--font-display); }
+
+        /* ============================================
+           CONTACT — torn, raw
+           ============================================ */
+        .contact {
+            max-width: 700px;
+            margin: 160px auto 80px;
+            padding: 60px;
+            background: var(--dark-grey);
+            border-left: 8px solid var(--accent);
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -8px;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(90deg, var(--accent) 0, var(--accent) 6px, transparent 6px, transparent 12px);
+            opacity: 0.5;
+        }
+
+        .contact h3 {
+            font-size: 48px;
+            font-weight: 400;
+            margin-bottom: 16px;
             letter-spacing: -1px;
         }
 
-        .contact-raw p {
+        .contact p {
             font-size: 15px;
             line-height: 1.7;
-            color: #333;
-            margin-bottom: 30px;
-            transform: rotate(0.3deg);
+            color: var(--text-muted);
+            margin-bottom: 32px;
         }
 
-        .contact-raw a {
+        .contact a {
             font-family: var(--font-mono);
-            font-size: 24px;
-            font-weight: 700;
-            color: #000;
+            font-size: 20px;
+            color: var(--cream);
             text-decoration: none;
-            border: 3px solid #E91E63;
-            padding: 12px 20px;
-            background: white;
-            display: inline-block;
-            transform: rotate(-2deg) skew(-1deg);
-            transition: all 0.1s;
-            letter-spacing: 1px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+            transition: all 0.15s;
         }
 
-        .contact-raw a:hover {
-            background: #E91E63;
-            color: white;
-            transform: rotate(0deg) skew(0deg) scale(1.05);
+        .contact a:hover {
+            color: var(--accent);
         }
 
-        /* Footer */
+        /* ============================================
+           FOOTER — live clock, system voice
+           ============================================ */
         footer {
             font-family: var(--font-mono);
-            font-size: 12px;
-            color: #666;
+            font-size: 11px;
+            color: var(--text-muted);
             text-align: center;
-            padding: 100px 40px 60px;
-            border-top: 3px dashed #000;
-            margin-top: 160px;
-            transform: rotate(-0.5deg);
-            background: linear-gradient(0deg, transparent 0%, rgba(233, 30, 99, 0.05) 100%);
+            padding: 80px 40px 40px;
+            border-top: 1px solid var(--mid-grey);
         }
 
         .clock {
             font-size: 22px;
-            margin-bottom: 12px;
-            letter-spacing: 3px;
-            font-weight: 700;
-            transform: rotate(-1deg);
-            filter: contrast(1.2);
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            color: var(--cream);
         }
 
-        /* Responsive */
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
         @media (max-width: 768px) {
-            .hero {
-                height: 50vh;
-                padding: 20px;
-            }
+            nav { padding: 12px 20px; font-size: 10px; }
+            .nav-left { gap: 20px; }
 
-            .hero-text {
-                font-size: 80px;
-            }
+            .hero { padding: 0 20px 40px; }
+            .hero-title { font-size: clamp(60px, 16vw, 120px); }
+            .hero-scrawl { display: none; }
 
-            nav {
-                left: 10px;
-                top: 10px;
-            }
+            .spread { grid-template-columns: 1fr; }
+            .spread::before { display: none; }
+            .spread-page { padding: 60px 20px; }
+            .spread-page.left { border-bottom: 1px solid var(--mid-grey); }
 
-            .spread {
-                grid-template-columns: 1fr;
-                margin: 40px 0;
-                border: 2px solid #000;
-            }
+            .feature-overlay { left: 20px; right: 20px; bottom: -40px; padding: 30px; }
+            .feature-overlay h3 { font-size: 28px; }
 
-            .spread::before {
-                display: none;
-            }
+            .invert-section { padding: 80px 20px; }
+            .invert-spread { grid-template-columns: 1fr; gap: 40px; }
 
-            .page {
-                padding: 40px 20px;
-                border-right: none;
-                border-bottom: 3px dotted #000;
-            }
+            .os-window { margin: 80px 20px; }
 
-            .page-left {
-                border-right: none;
-                border-bottom: 4px dotted #000;
-            }
+            .ledger { padding: 0 20px; margin: 80px auto; }
+            .ledger-row { grid-template-columns: 40px 1fr; gap: 16px; font-size: 12px; }
+            .ledger-year, .ledger-pub { display: none; }
+            .ledger-row.head .ledger-year,
+            .ledger-row.head .ledger-pub { display: none; }
 
-            .article-raw {
-                padding: 40px 20px;
-                margin: 80px 0;
-            }
+            .contact { margin: 100px 20px 60px; padding: 40px 24px; }
+            .contact h3 { font-size: 36px; }
 
-            .article-raw-text {
-                margin-left: 0;
-                padding: 40px 20px;
-            }
-
-            .index-table {
-                padding: 20px;
-                margin: 80px 0;
-            }
-
-            .index-row {
-                grid-template-columns: 40px 1fr;
-                gap: 20px;
-                font-size: 12px;
-            }
-
-            .contact-raw {
-                padding: 40px 20px;
-                margin: 100px 0;
-            }
-
-            footer {
-                padding: 60px 20px 40px;
-            }
+            footer { padding: 60px 20px 30px; }
         }
     </style>
 </head>
 <body>
+
     <nav>
-        <a href="#work">ESSAYS</a>
-        <a href="#visual">WORK</a>
+        <div class="nav-left">
+            <a href="#work">Selected Work</a>
+            <a href="#index">Index</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-right" id="nav-clock">00:00:00</div>
     </nav>
 
+    <!-- HERO — cold open -->
     <section class="hero">
-        <div class="hero-content">
-            <span class="meta-label">— portfolio —</span>
-            <div class="hero-text">
-                <span>ESSAYS</span>
-                <span>&TYPE</span>
-            </div>
-        </div>
+        <div class="hero-meta">Portfolio — Selected Essays & Visual Work</div>
+        <h1 class="hero-title">
+            <span>ESSAYS</span>
+            <span>&nbsp;& Type</span>
+        </h1>
+        <div class="hero-scrawl">notes, fragments, drafts →</div>
     </section>
 
+    <!-- SPREAD 1 — dark book pages -->
     <section id="work" class="spread">
-        <div class="page page-left">
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=320&fit=crop" alt="" class="page-image">
-            <h3 class="page-title">The Future of Digital Typography</h3>
-            <p class="page-subtitle">Variable fonts reshape type design</p>
-            <div class="page-meta">2026 / Design Journal</div>
-        </div>
-
-        <div class="page page-right">
-            <div class="scribble">NOTES →</div>
-            <div class="page-body">
-                <p>The shift toward variable fonts represents a fundamental change in how we think about typography at scale. Instead of serving multiple static files for different weights and widths, designers can now define an entire typographic space with a single font file.</p>
-                <p class="glitch">// Instead of discrete choices, we now have continuous dimensions. Weight, width, optical size become variables in a design system.</p>
-                <p>This opens new possibilities: dynamic responsiveness, performance gains, unprecedented expressive control.</p>
+        <div class="spread-page left">
+            <div style="position: relative; display: inline-block; width: 100%;">
+                <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&h=450&fit=crop" alt="Books on typography" class="spread-image taped">
+                <div class="tape tape-tl"></div>
+                <div class="tape tape-tr"></div>
             </div>
+            <h3 class="spread-title">The Future of Digital Typography</h3>
+            <p class="spread-excerpt">Variable fonts reshape how we approach type design—continuous dimensions replace discrete choices.</p>
+            <div class="spread-meta">2026 / Design Journal</div>
+        </div>
+        <div class="spread-page right">
+            <div class="scribble">Notes →</div>
+            <div class="body-text">
+                <p>The shift toward variable fonts represents a fundamental change. Instead of serving multiple static files for different weights, designers define an entire typographic space with a single file.</p>
+                <div class="glitch-line">// weight, width, optical size → variables in a design system</div>
+                <p>This opens new possibilities: dynamic responsiveness, performance gains, unprecedented expressive control. But it demands a new literacy—designers must learn to think in dimensions rather than discrete choices.</p>
+            </div>
+            <div class="footnote">Published Design Journal, March 2026. 4,200 words.</div>
         </div>
     </section>
 
-    <section class="article-raw">
-        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&h=400&fit=crop" alt="">
-        <div class="article-raw-text">
+    <!-- FULL-BLEED FEATURE -->
+    <section class="feature">
+        <img src="https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=1200&h=600&fit=crop" alt="Whitespace study" class="feature-image">
+        <div class="feature-overlay">
             <h3>On Whitespace as Content</h3>
-            <p>Why negative space isn't empty. The most overlooked design decision is what to leave out. Whitespace—breathing room, margins, the void—isn't a default state. It's an active choice.</p>
-            <p>In print, margins protect your eye. Online, they signal taste.</p>
+            <p>Why negative space isn't empty. The most overlooked design decision is what to leave out. Whitespace—breathing room, margins, the void—isn't a default. It's an active choice.</p>
+            <div class="spread-meta">2026 / Design Observer</div>
         </div>
     </section>
 
+    <!-- INVERTED CREAM SECTION — zine flyer -->
+    <section class="invert-section">
+        <div class="invert-spread">
+            <div>
+                <img src="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=500&h=660&fit=crop" alt="Analog photography" class="invert-image">
+            </div>
+            <div class="invert-text">
+                <div class="invert-scribble">this one matters—</div>
+                <h3>Brutalist Web Design: A Manifesto</h3>
+                <p>A polemic on restraint, intentionality, and editorial rigor. Why the best websites often look like they were designed in 1997—and why that's the point.</p>
+                <p>The web has become a monoculture of rounded corners, gradient backgrounds, and sans-serif body copy. Every SaaS landing page looks the same. This essay argues for a return to rawness.</p>
+                <div class="invert-meta">2025 / Web Design Today</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPREAD 2 -->
     <section class="spread">
-        <div class="page page-left">
-            <div class="page-body">
-                <p>Every pixel matters when you're choosing not to fill it. This essay explores how emptiness shapes perception, how silence speaks louder than noise.</p>
-                <p class="glitch">:: why your margins are your voice ::</p>
-                <p>Designers often fear empty space. We're trained to fill, to optimize, to make use of every inch. But the most sophisticated work knows when to stop.</p>
+        <div class="spread-page left">
+            <div class="body-text">
+                <p>Algorithmic feeds have fundamentally altered how we encounter text. The scroll replaced the page. The snippet replaced the paragraph. Depth became a luxury good.</p>
+                <div class="glitch-line">:: sustained attention as resistance ::</div>
+                <p>This essay traces the history of reading culture from the codex to the feed, arguing that the format of text shapes its meaning as much as the words themselves.</p>
             </div>
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=320&fit=crop&q=80" alt="" class="page-image" style="margin-top: 20px;">
+            <div style="position: relative; display: inline-block; width: 100%; margin-top: 30px;">
+                <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&h=450&fit=crop" alt="Library" class="spread-image" style="transform: rotate(1.5deg);">
+            </div>
         </div>
-
-        <div class="page page-right">
-            <div style="background: #E8E8E0; padding: 40px; margin-bottom: 30px; border: 2px dashed #000; transform: rotate(1deg);">
-                <p style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; margin-bottom: 12px; opacity: 0.7;">Published in</p>
-                <p style="font-family: var(--font-display); font-size: 24px; font-weight: 700; transform: rotate(-0.5deg);">Design Observer</p>
-                <p style="font-family: var(--font-mono); font-size: 10px; margin-top: 12px; opacity: 0.7;">June 2026</p>
+        <div class="spread-page right">
+            <div style="background: var(--off-black); padding: 30px; margin-bottom: 30px; border: 1px dashed var(--mid-grey);">
+                <div style="font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 12px;">Published in</div>
+                <div style="font-size: 28px; font-weight: 700; letter-spacing: -1px;">The Typographic</div>
+                <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 12px;">November 2025</div>
             </div>
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=320&fit=crop&q=60" alt="" class="page-image" style="transform: rotate(-1.5deg);">
+            <h3 class="spread-title">Reading Culture in the Age of Feeds</h3>
+            <p class="spread-excerpt">How algorithmic feeds changed our relationship with text, depth, and sustained attention.</p>
+            <div class="spread-meta">2025 / The Typographic</div>
         </div>
     </section>
 
-    <section id="visual" class="window-corrupted">
-        <div class="window-title">
-            <span>portfolio.exe</span>
-            <div class="window-close">×</div>
-        </div>
-        <div class="window-content">
-            <div class="window-inner">
-                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&h=280&fit=crop&q=60" alt="" class="window-image">
-                <div class="window-text">
-                    <h3>Brutalist Web Design: A Manifesto</h3>
-                    <p>A polemic on restraint, intentionality, and editorial rigor in digital design. Why the best websites look like they were designed in 1997.</p>
-                    <p style="font-family: var(--font-mono); font-size: 11px; margin-top: 12px;">2025 / Web Design Today</p>
+    <!-- OS WINDOW — system voice, deadpan -->
+    <section style="padding: 0 40px;">
+        <div class="os-window">
+            <div class="os-bar">
+                <div class="os-dots">
+                    <div class="os-dot red"></div>
+                    <div class="os-dot yellow"></div>
+                    <div class="os-dot green"></div>
                 </div>
+                <span>portfolio.exe — selected work</span>
+            </div>
+            <div class="os-body">
+                <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?w=900&h=260&fit=crop" alt="Desk with notebook" class="os-image">
+                <h3>On Seeing Clearly</h3>
+                <p>A deep dive into visual literacy and how we parse meaning from images in the digital age. How the camera phone collapsed the distance between seeing and publishing, and what we lost in the compression.</p>
+                <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 12px; letter-spacing: 2px; text-transform: uppercase;">2026 / Eye Magazine</div>
             </div>
         </div>
     </section>
 
-    <section class="index-table">
-        <div class="index-row">
-            <div class="index-num">№</div>
-            <div class="index-title">Title</div>
-            <div>Year</div>
-            <div>Publication</div>
+    <!-- INDEX — ledger table -->
+    <section id="index" class="ledger">
+        <div class="ledger-header">Complete Index</div>
+        <div class="ledger-row head">
+            <div>№</div>
+            <div>Title</div>
+            <div class="ledger-year">Year</div>
+            <div class="ledger-pub">Publication</div>
         </div>
-        <div class="index-row">
-            <div class="index-num">01</div>
-            <div class="index-title">The Future of Digital Typography</div>
-            <div>2026</div>
-            <div>Design Journal</div>
+        <div class="ledger-row">
+            <div class="ledger-num">01</div>
+            <div class="ledger-title">The Future of Digital Typography</div>
+            <div class="ledger-year">2026</div>
+            <div class="ledger-pub">Design Journal</div>
         </div>
-        <div class="index-row">
-            <div class="index-num">02</div>
-            <div class="index-title">On Whitespace as Content</div>
-            <div>2026</div>
-            <div>Design Observer</div>
+        <div class="ledger-row">
+            <div class="ledger-num">02</div>
+            <div class="ledger-title">On Whitespace as Content</div>
+            <div class="ledger-year">2026</div>
+            <div class="ledger-pub">Design Observer</div>
         </div>
-        <div class="index-row">
-            <div class="index-num">03</div>
-            <div class="index-title">Brutalist Web Design: A Manifesto</div>
-            <div>2025</div>
-            <div>Web Design Today</div>
+        <div class="ledger-row">
+            <div class="ledger-num">03</div>
+            <div class="ledger-title">Brutalist Web Design: A Manifesto</div>
+            <div class="ledger-year">2025</div>
+            <div class="ledger-pub">Web Design Today</div>
         </div>
-        <div class="index-row">
-            <div class="index-num">04</div>
-            <div class="index-title">Reading Culture in the Age of Feeds</div>
-            <div>2025</div>
-            <div>The Typographic</div>
+        <div class="ledger-row">
+            <div class="ledger-num">04</div>
+            <div class="ledger-title">Reading Culture in the Age of Feeds</div>
+            <div class="ledger-year">2025</div>
+            <div class="ledger-pub">The Typographic</div>
+        </div>
+        <div class="ledger-row">
+            <div class="ledger-num">05</div>
+            <div class="ledger-title">On Seeing Clearly</div>
+            <div class="ledger-year">2026</div>
+            <div class="ledger-pub">Eye Magazine</div>
         </div>
     </section>
 
-    <section class="contact-raw">
-        <h3>Get in Touch</h3>
-        <p>Write about projects at the intersection of typography, editorial design, and digital craft. Commissions, collaborations, or thoughts on type welcome.</p>
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <h3>Get in touch</h3>
+        <p>Commissions, collaborations, or thoughts on type. Writing at the intersection of typography, editorial design, and digital craft.</p>
         <a href="mailto:hello@example.com">hello@example.com</a>
     </section>
 
     <footer>
         <div class="clock" id="clock">00:00:00</div>
-        <p>Portfolio • 2026</p>
+        <div>Portfolio — 2026</div>
     </footer>
 
     <script>
-        function updateClock() {
+        function tick() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+            const t = [now.getHours(), now.getMinutes(), now.getSeconds()]
+                .map(n => String(n).padStart(2, '0')).join(':');
+            document.getElementById('clock').textContent = t;
+            document.getElementById('nav-clock').textContent = t;
         }
-
-        updateClock();
-        setInterval(updateClock, 1000);
+        tick();
+        setInterval(tick, 1000);
     </script>
 </body>
 </html>

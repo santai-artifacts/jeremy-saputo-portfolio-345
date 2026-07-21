@@ -57,24 +57,21 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
     }
 
-    /* Foxing spots — age marks scattered across the page */
-    body::after {
-      content: '';
+    /* ── Glitch lines overlay ────────────────────────────────────── */
+    #glitch-lines {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 8999;
-      opacity: 0.03;
-      background-image:
-        radial-gradient(circle at 12% 28%, #8B6914 0%, transparent 3px),
-        radial-gradient(circle at 87% 15%, #8B6914 0%, transparent 2px),
-        radial-gradient(circle at 45% 72%, #8B6914 0%, transparent 4px),
-        radial-gradient(circle at 73% 89%, #8B6914 0%, transparent 2px),
-        radial-gradient(circle at 23% 56%, #8B6914 0%, transparent 3px),
-        radial-gradient(circle at 91% 44%, #8B6914 0%, transparent 2px),
-        radial-gradient(circle at 55% 33%, #8B6914 0%, transparent 3px),
-        radial-gradient(circle at 8% 81%, #8B6914 0%, transparent 4px),
-        radial-gradient(circle at 67% 61%, #8B6914 0%, transparent 2px);
+      z-index: 8998;
+      overflow: hidden;
+    }
+
+    .glitch-line {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      opacity: 0;
     }
 
     /* ── Custom cursor ───────────────────────────────────────────── */
@@ -966,6 +963,7 @@
 <body>
 
   <div id="cursor"></div>
+  <div id="glitch-lines"></div>
 
   <!-- ─────────────── HEADER ─────────────── -->
   <header>
@@ -1304,6 +1302,61 @@
         if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+
+    /* ── TV glitch lines ─────────────────────────────────────────── */
+    const glitchContainer = document.getElementById('glitch-lines');
+    const glitchColors = [
+      'rgba(255, 0, 150, 0.25)',
+      'rgba(255, 0, 150, 0.18)',
+      'rgba(0, 200, 255, 0.22)',
+      'rgba(0, 200, 255, 0.16)',
+      'rgba(100, 255, 100, 0.20)',
+      'rgba(100, 255, 100, 0.14)',
+    ];
+
+    function spawnGlitch() {
+      const count = 1 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < count; i++) {
+        const line = document.createElement('div');
+        line.className = 'glitch-line';
+        const h = Math.random() < 0.6 ? (2 + Math.random() * 3) : (4 + Math.random() * 8);
+        const y = Math.random() * 100;
+        const color = glitchColors[Math.floor(Math.random() * glitchColors.length)];
+        const dur = 80 + Math.random() * 250;
+        const fullWidth = Math.random() < 0.4;
+
+        line.style.cssText = `
+          top: ${y}%;
+          height: ${h}px;
+          background: ${color};
+          opacity: 0;
+          box-shadow: 0 0 ${2 + Math.random() * 4}px ${color};
+          ${!fullWidth ? `width: ${35 + Math.random() * 65}%; left: ${Math.random() * 30}%;` : ''}
+          ${Math.random() < 0.25 ? 'filter: blur(1px);' : ''}
+        `;
+        glitchContainer.appendChild(line);
+
+        requestAnimationFrame(() => {
+          line.style.transition = `opacity ${dur * 0.25}ms ease-in`;
+          line.style.opacity = '1';
+        });
+
+        setTimeout(() => {
+          line.style.transition = `opacity ${dur * 0.6}ms ease-out`;
+          line.style.opacity = '0';
+          setTimeout(() => line.remove(), dur);
+        }, dur * 0.35);
+      }
+
+      const next = Math.random() < 0.2
+        ? 150 + Math.random() * 350
+        : 1500 + Math.random() * 5000;
+      setTimeout(spawnGlitch, next);
+    }
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTimeout(spawnGlitch, 800 + Math.random() * 1500);
+    }
   </script>
 
 </body>

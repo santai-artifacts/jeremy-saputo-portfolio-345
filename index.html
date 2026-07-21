@@ -1324,12 +1324,14 @@
     const glitchContainer = document.getElementById('glitch-lines');
     const heroName = document.querySelector('.hero-name');
     const glitchColors = [
-      'rgba(255, 0, 150, 0.45)',
-      'rgba(255, 0, 150, 0.35)',
-      'rgba(0, 200, 255, 0.42)',
-      'rgba(0, 200, 255, 0.32)',
-      'rgba(100, 255, 100, 0.40)',
-      'rgba(100, 255, 100, 0.30)',
+      'rgba(255, 0, 150, 0.65)',
+      'rgba(255, 0, 150, 0.55)',
+      'rgba(0, 200, 255, 0.62)',
+      'rgba(0, 200, 255, 0.52)',
+      'rgba(100, 255, 100, 0.60)',
+      'rgba(100, 255, 100, 0.50)',
+      'rgba(255, 100, 0, 0.58)',
+      'rgba(255, 255, 0, 0.54)',
     ];
 
     function checkGlitchTextCollision(lineTop, lineHeight) {
@@ -1348,49 +1350,64 @@
     }
 
     function spawnGlitch() {
-      const count = 2 + Math.floor(Math.random() * 4);
+      const count = 3 + Math.floor(Math.random() * 5);
       for (let i = 0; i < count; i++) {
-        const h = Math.random() < 0.5 ? (3 + Math.random() * 4) : (6 + Math.random() * 12);
+        const h = Math.random() < 0.4 ? (2 + Math.random() * 3) : (5 + Math.random() * 18);
         const y = Math.random() * 100;
 
         if (checkGlitchTextCollision(y, h) && heroName) {
-          const shift = (Math.random() < 0.5 ? -1 : 1) * (8 + Math.random() * 12);
+          const shift = (Math.random() < 0.5 ? -1 : 1) * (18 + Math.random() * 32);
+          const duration = 80 + Math.random() * 140;
+          heroName.style.transition = `transform ${duration}ms cubic-bezier(0.34, 1.56, 0.64, 1)`;
           heroName.style.transform = `translateX(${shift}px)`;
           setTimeout(() => {
+            heroName.style.transition = `transform 40ms ease-out`;
             heroName.style.transform = 'translateX(0)';
-          }, 60 + Math.random() * 100);
+          }, duration);
         }
 
         const line = document.createElement('div');
         line.className = 'glitch-line';
         const color = glitchColors[Math.floor(Math.random() * glitchColors.length)];
-        const dur = 60 + Math.random() * 180;
-        const fullWidth = Math.random() < 0.5;
+        const dur = 80 + Math.random() * 240;
+
+        const lineType = Math.random();
+        let lineStyle = '';
+
+        if (lineType < 0.5) {
+          lineStyle = `width: 100%;`;
+        } else if (lineType < 0.8) {
+          lineStyle = `width: ${20 + Math.random() * 80}%; left: ${Math.random() * 40}%;`;
+        } else {
+          lineStyle = `width: ${15 + Math.random() * 85}%; left: ${Math.random() * 30}%; filter: blur(0.5px);`;
+        }
 
         line.style.cssText = `
           top: ${y}%;
           height: ${h}px;
           background: ${color};
           opacity: 0;
-          box-shadow: 0 0 ${3 + Math.random() * 6}px ${color};
-          ${!fullWidth ? `width: ${30 + Math.random() * 70}%; left: ${Math.random() * 35}%;` : ''}
-          ${Math.random() < 0.3 ? 'filter: blur(1px);' : ''}
+          box-shadow:
+            0 0 ${4 + Math.random() * 8}px ${color},
+            inset 0 0 ${2 + Math.random() * 4}px ${color},
+            ${Math.random() < 0.6 ? `${-2 + Math.random() * 4}px 0 ${3 + Math.random() * 5}px ${color}` : 'none'};
+          ${lineStyle}
         `;
         glitchContainer.appendChild(line);
 
         requestAnimationFrame(() => {
-          line.style.transition = `opacity ${dur * 0.2}ms ease-in`;
+          line.style.transition = `opacity ${dur * 0.15}ms ease-in`;
           line.style.opacity = '1';
         });
 
         setTimeout(() => {
-          line.style.transition = `opacity ${dur * 0.5}ms ease-out`;
+          line.style.transition = `opacity ${dur * 0.4}ms ease-out`;
           line.style.opacity = '0';
-          setTimeout(() => line.remove(), dur);
-        }, dur * 0.4);
+          setTimeout(() => line.remove(), dur * 0.4);
+        }, dur * 0.35);
       }
 
-      const next = 200 + Math.random() * 700;
+      const next = 150 + Math.random() * 500;
       setTimeout(spawnGlitch, next);
     }
 

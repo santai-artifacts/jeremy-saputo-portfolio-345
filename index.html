@@ -164,6 +164,22 @@
       display: none;
     }
 
+    #glitch-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 8998;
+      overflow: hidden;
+    }
+
+    .glitch-line {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      opacity: 0;
+    }
+
     .hero-name {
       font-family: var(--serif);
       font-size: var(--t-hero);
@@ -173,6 +189,7 @@
       white-space: nowrap;
       position: relative;
       z-index: 3;
+      transition: transform 0.05s ease-out;
     }
 
     .hero-name .it {
@@ -963,7 +980,6 @@
 <body>
 
   <div id="cursor"></div>
-  <div id="glitch-lines"></div>
 
   <!-- ─────────────── HEADER ─────────────── -->
   <header>
@@ -978,6 +994,7 @@
 
   <!-- ─────────────── COLD OPEN ─────────────── -->
   <section class="cold-open">
+    <div id="glitch-lines"></div>
     <div>
       <div class="hero-name">
         Maggie&nbsp;<span class="it">Nelson</span>
@@ -1303,8 +1320,9 @@
       });
     });
 
-    /* ── TV glitch lines ─────────────────────────────────────────── */
+    /* ── TV glitch lines — hero section only ─────────────────────── */
     const glitchContainer = document.getElementById('glitch-lines');
+    const heroName = document.querySelector('.hero-name');
     const glitchColors = [
       'rgba(255, 0, 150, 0.45)',
       'rgba(255, 0, 150, 0.35)',
@@ -1314,13 +1332,37 @@
       'rgba(100, 255, 100, 0.30)',
     ];
 
+    function checkGlitchTextCollision(lineTop, lineHeight) {
+      if (!heroName) return false;
+      const nameRect = heroName.getBoundingClientRect();
+      const coldOpen = document.querySelector('.cold-open');
+      const coldOpenRect = coldOpen.getBoundingClientRect();
+
+      const linePixels = (lineTop / 100) * coldOpenRect.height;
+      const lineBottomPixels = linePixels + lineHeight;
+
+      const nameTopRelative = nameRect.top - coldOpenRect.top;
+      const nameBottomRelative = nameTopRelative + nameRect.height;
+
+      return !(lineBottomPixels < nameTopRelative || linePixels > nameBottomRelative);
+    }
+
     function spawnGlitch() {
       const count = 2 + Math.floor(Math.random() * 4);
       for (let i = 0; i < count; i++) {
-        const line = document.createElement('div');
-        line.className = 'glitch-line';
         const h = Math.random() < 0.5 ? (3 + Math.random() * 4) : (6 + Math.random() * 12);
         const y = Math.random() * 100;
+
+        if (checkGlitchTextCollision(y, h) && heroName) {
+          const shift = (Math.random() < 0.5 ? -1 : 1) * (8 + Math.random() * 12);
+          heroName.style.transform = `translateX(${shift}px)`;
+          setTimeout(() => {
+            heroName.style.transform = 'translateX(0)';
+          }, 60 + Math.random() * 100);
+        }
+
+        const line = document.createElement('div');
+        line.className = 'glitch-line';
         const color = glitchColors[Math.floor(Math.random() * glitchColors.length)];
         const dur = 60 + Math.random() * 180;
         const fullWidth = Math.random() < 0.5;

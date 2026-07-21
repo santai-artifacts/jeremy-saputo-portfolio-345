@@ -1306,56 +1306,54 @@
     /* ── TV glitch lines ─────────────────────────────────────────── */
     const glitchContainer = document.getElementById('glitch-lines');
     const glitchColors = [
-      'rgba(255, 0, 150, 0.25)',
-      'rgba(255, 0, 150, 0.18)',
-      'rgba(0, 200, 255, 0.22)',
-      'rgba(0, 200, 255, 0.16)',
-      'rgba(100, 255, 100, 0.20)',
-      'rgba(100, 255, 100, 0.14)',
+      'rgba(255, 0, 150, 0.45)',
+      'rgba(255, 0, 150, 0.35)',
+      'rgba(0, 200, 255, 0.42)',
+      'rgba(0, 200, 255, 0.32)',
+      'rgba(100, 255, 100, 0.40)',
+      'rgba(100, 255, 100, 0.30)',
     ];
 
     function spawnGlitch() {
-      const count = 1 + Math.floor(Math.random() * 3);
+      const count = 2 + Math.floor(Math.random() * 4);
       for (let i = 0; i < count; i++) {
         const line = document.createElement('div');
         line.className = 'glitch-line';
-        const h = Math.random() < 0.6 ? (2 + Math.random() * 3) : (4 + Math.random() * 8);
+        const h = Math.random() < 0.5 ? (3 + Math.random() * 4) : (6 + Math.random() * 12);
         const y = Math.random() * 100;
         const color = glitchColors[Math.floor(Math.random() * glitchColors.length)];
-        const dur = 80 + Math.random() * 250;
-        const fullWidth = Math.random() < 0.4;
+        const dur = 60 + Math.random() * 180;
+        const fullWidth = Math.random() < 0.5;
 
         line.style.cssText = `
           top: ${y}%;
           height: ${h}px;
           background: ${color};
           opacity: 0;
-          box-shadow: 0 0 ${2 + Math.random() * 4}px ${color};
-          ${!fullWidth ? `width: ${35 + Math.random() * 65}%; left: ${Math.random() * 30}%;` : ''}
-          ${Math.random() < 0.25 ? 'filter: blur(1px);' : ''}
+          box-shadow: 0 0 ${3 + Math.random() * 6}px ${color};
+          ${!fullWidth ? `width: ${30 + Math.random() * 70}%; left: ${Math.random() * 35}%;` : ''}
+          ${Math.random() < 0.3 ? 'filter: blur(1px);' : ''}
         `;
         glitchContainer.appendChild(line);
 
         requestAnimationFrame(() => {
-          line.style.transition = `opacity ${dur * 0.25}ms ease-in`;
+          line.style.transition = `opacity ${dur * 0.2}ms ease-in`;
           line.style.opacity = '1';
         });
 
         setTimeout(() => {
-          line.style.transition = `opacity ${dur * 0.6}ms ease-out`;
+          line.style.transition = `opacity ${dur * 0.5}ms ease-out`;
           line.style.opacity = '0';
           setTimeout(() => line.remove(), dur);
-        }, dur * 0.35);
+        }, dur * 0.4);
       }
 
-      const next = Math.random() < 0.2
-        ? 150 + Math.random() * 350
-        : 1500 + Math.random() * 5000;
+      const next = 200 + Math.random() * 700;
       setTimeout(spawnGlitch, next);
     }
 
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTimeout(spawnGlitch, 800 + Math.random() * 1500);
+      setTimeout(spawnGlitch, 300 + Math.random() * 600);
     }
   </script>
 
